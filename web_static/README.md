@@ -1,0 +1,1 @@
+This section consists of the main landing page of the fresh basket website.

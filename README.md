@@ -1,9 +1,9 @@
-## Tsori Tech Solutions \textcolor{cyan}{cyan}
-3268 Kiamunyi Street
-Nakuru, NKR 20100
-(+254) 790 192 324
+## Tsori Tech Solutions
+3268 Kiamunyi Street  
+Nakuru, NKR 20100  
+(+254) 790 192 324  
 # Fresh Basket
-One-stop shop for all your grocery needs \textcolor{magenta}{magenta}.
+One-stop shop for all your grocery needs.  
 May 01, 2023
 ### Overview
 Fresh Basket is an online grocery shopping platform that allows users to shop for groceries from home and have them delivered to their doorstep. The project aims to solve the problem of long wait times and queues in grocery stores and to make grocery shopping more convenient and accessible for everyone.
