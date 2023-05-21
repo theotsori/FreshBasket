@@ -29,7 +29,6 @@ body {
   .features {
     text-align: center;
     line-height: 30px;
-    background-color: black;
   }
 
   .features-containers {
@@ -50,9 +49,10 @@ body {
 
   .features-containers img {
     object-fit: contain;
-    position: relative;
+    position:relative;
     width: 100%;
     height: 200px;
+    border-radius: 2%;
   }
 
   ::-webkit-scrollbar {
