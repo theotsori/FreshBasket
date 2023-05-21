@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Basket Shop</title>
+</head>
+<body>
+    <h1>Product Catalog</h1>
+    <ul>
+        {% for product in products %}
+        <li>
+            <h3>{{ product[1] }}</h3>
+            <p>{{ product[2] }}</p>
+            <p>Price: ${{ product[3] }}</p>
+            <img src="{{ product[4] }}" alt="{{ product[1] }}">
+            <p>Category: {{ product[5] }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
