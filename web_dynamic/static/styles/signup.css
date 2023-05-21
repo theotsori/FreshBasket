@@ -1,0 +1,124 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1;
+    background-image: url('../images/bg-signup.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .back-button {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    padding: 6px 10px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  
+  .back-button:hover {
+    background-color: #45a049;
+  }  
+  
+  .container {
+    max-width: 400px;
+    margin: 100px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="number"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 4px;
+  }
+  
+  input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 4px;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: orange;
+  }
+  
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80%;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    font-size: 12px;
+  }
+  
+  .footer-bottom p {
+    color: #999;
+  }
+
+  p {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .a-link {
+    color: #4CAF50;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .a-link:hover {
+    color: orange;
+  }
+  
+/* Media Query for smaller screens */
+@media (max-width: 600px) {
+    .container {
+      margin: 50px auto;
+      padding: 10px;
+    }
+    
+    h1 {
+      font-size: 24px;
+    }
+    
+    input[type="text"],
+    input[type="password"] {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+    
+    button {
+      padding: 12px 16px;
+      font-size: 16px;
+    }
+  }

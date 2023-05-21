@@ -1,0 +1,128 @@
+/* Footer styles */
+footer {
+  position: relative;
+  background-color: #f9f9f9;
+  padding: 30px 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+footer .container {
+  max-width: 100%;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+footer .footer-logo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+footer .footer-logo img {
+  max-width: 100%;
+  height: auto;
+}
+
+footer .footer-columns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+footer .footer-column {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 40px;
+}
+
+footer .footer-column h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+footer ul li a {
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+footer .social-media-icons {
+  display: flex;
+  margin-top: 20px;
+}
+
+footer .social-media-icons li {
+  margin-right: 10px;
+}
+
+footer .social-media-icons li:last-child {
+  margin-right: 0;
+}
+
+footer .social-media-icons a {
+  display: block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  color: #fff;
+  background-color: #333;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}
+
+footer .social-media-icons a:hover {
+  transform: scale(1.2);
+}
+
+footer .footer-column form {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+footer .footer-column input[type="email"] {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+footer .footer-column button[type="submit"] {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease-in-out;
+}
+
+footer .footer-column button[type="submit"]:hover {
+  background-color: #fff;
+  color: #333;
+}
+
+footer .footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 12px;
+}
+
+footer .footer-bottom p {
+  color: #999;
+}
