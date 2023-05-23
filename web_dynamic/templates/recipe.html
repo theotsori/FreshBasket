@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/shop.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/recipe.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/header.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
-    <script src="{{ url_for('static', filename='scripts/shop.js') }}"></script>
-    <title>Fresh Basket Shop</title>
+    <script src="{{ url_for('static', filename='scripts/recipe.js') }}"></script>
+    <title>Frb: Recipe</title>
 </head>
 <body>
     <header class="header">
@@ -45,30 +45,10 @@
           </div>
         </div>
     </header>
-    <div class="shop-container">
-        <h1>Product Catalog</h1>
-        <div class="category-container">
-            <h3>Categories</h3>
-            <ul id="category-list">
-                <li data-category="all" class="active">All</li>
-                <li data-category="Fruit">Fruits</li>
-                <li data-category="Dairy">Dairy</li>
-                <li data-category="Bread">Breads</li>
-                <li data-category="Meat">Meat</li>
-                <li data-category="Fish">Fish</li>
-            </ul>
-        </div>
-        <ul id="product-list">
-            {% for product in products %}
-            <li data-category="{{ product[5] }}">
-                <img src="{{ url_for('static', filename=product[4]) }}" alt="{{ product[1] }}">
-                <h3>{{ product[1] }}</h3>
-                <p>{{ product[2] }}</p>
-                <p class="price">Price: Ksh {{ product[3] }}</p>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
+    <section class="recipe-details">
+        <h2>Recipe Details</h2>
+        <div id="recipe-container"></div>
+    </section>
     <footer>
         <div class="container">
           <div class="footer-logo">

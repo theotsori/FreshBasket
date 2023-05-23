@@ -26,6 +26,11 @@ def home():
     else:
         return redirect(url_for('signin'))
 
+# Route for recipe
+@app.route('/recipe')
+def recipe():
+    return render_template('recipe.html')
+
 # Route for the product page
 @app.route('/products')
 def products():
