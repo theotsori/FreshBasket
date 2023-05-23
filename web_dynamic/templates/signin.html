@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/signin.css') }}">
+    <script src="{{ url_for('static', filename='scripts/signin.js') }}"></script>
+    <title>Fresh Basket</title>
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('home') }}" class="back-button">&larr; Back</a>
+    </header>
+    <div class="container">
+        <img src="{{ url_for('static', filename='images/signin.jpg') }}" alt="signin.jpg">
+        <h1>Sign In to Fresh Basket</h1>
+        <form id="signin-form">
+            <input type="text" id="email" placeholder="Email" required>
+            <input type="text" id="phone" placeholder="Phone" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <a class="b-link" href="#">forgot password?</a>
+            <button type="submit">Sign In</button>
+            <p>Create an account? <a class="a-link" href="{{ url_for('signup') }}">Sign Up</a></p>
+        </form>
+    </div>
+    <footer>
+        <div class="footer-bottom">
+            <p>© 2023 Fresh Basket. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
