@@ -125,13 +125,36 @@ nav button[type="submit"]:hover {
   justify-content: center;
   color: #333;
   text-decoration: none;
-  font-size: 24px;
+  font-size: 40px;
   transition: color 0.3s ease-in-out;
   margin-right: 20px;
 }
 
 .cart a:hover {
   color: #f00;
+}
+
+.profile {
+  position: relative;
+}
+
+.profile a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  text-decoration: none;
+  /*font-size: 32px;*/
+  transition: color 0.3s ease-in-out;
+  margin-right: 20px;
+}
+
+.profile .icon-large {
+  font-size: 40px;
+}
+
+.profile a:hover {
+  color: orange;
 }
 
 .menu-toggle {

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/profile.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/material-icons.min.js"></script>
+    <title>FRB: Profile</title>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+          <div class="logo">
+            <a href="#"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo"></a>
+          </div>
+          <div class="menu-toggle">
+            <i class="material-icons">menu</i>
+          </div>
+          <nav class="show-menu">
+            <ul>
+              <li><a href="{{ url_for('home') }}">Home</a></li>
+              <li><a href="{{ url_for('products') }}">Shop</a></li>
+              <li><a href="#">Recipes</a></li>
+              <li><a href="#">Videos</a></li>
+              <li>
+                <form>
+                  <input type="search" placeholder="Search the grocery shop...">
+                  <button type="submit"><i class="material-icons">search</i></button>
+                </form>
+              </li>
+            </ul>
+          </nav>
+          <div class="user">
+            <div class="profile">
+              <a href="{{ url_for('profile') }}"><i class="material-icons icon-large">account_circle</i></a>
+            </div>
+            <div class="sign-in" class="material-icons">
+              <a href="{{ url_for('signout') }}">Sign Out</a>
+            </div>
+            <div class="cart">
+              <a href="#"><i class="material-icons">shopping_cart</i><span>0</span></a>
+            </div>
+          </div>
+        </div>
+    </header>
+    <h1>Profile</h1>
+    <div class="profile-container">
+        <span class="material-icons icon-large">account_circle</span>
+        <h2>Welcome, {{ user[1] }}!</h2>
+        <p>Email: {{ user[2] }}</p>
+        <p>Phone: {{ user[4] }}</p>
+    </div>
+    <footer>
+        <div class="footer-bottom">
+            <p>© 2023 Fresh Basket. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
