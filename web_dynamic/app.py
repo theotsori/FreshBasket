@@ -106,34 +106,24 @@ def signin():
         cnx = mysql.connector.connect(**db_config)
         cursor = cnx.cursor()
 
-        try:
-            # Verify the user's credentials
-            query = "SELECT Email FROM User WHERE Email = %s AND Password = %s"
-            cursor.execute(query, (email, password))
-            result = cursor.fetchone()
+        # Verify the user's credentials
+        query = "SELECT Email FROM User WHERE Email = %s AND Password = %s"
+        cursor.execute(query, (email, password))
+        result = cursor.fetchone()
 
-            if result:
-                # If credentials are valid, create a session for the user
-                session['email'] = email
+        if result:
+            # If credentials are valid, create a session for the user
+            session['email'] = email
 
-                # Redirect to the home page
-                return redirect(url_for('home'))
+            # Redirect to the home page
+            return redirect(url_for('home'))
 
-            # If credentials are invalid, display an error message
-            error_message = 'Invalid credentials. Please try again.'
-            return render_template('signin.html', error_message=error_message)
+        # User not found or invalid credentials
+        return render_template('signup.html')
 
-        except Exception as e:
-            # Handle any exceptions that may occur during database operations
-            error_message = 'An error occurred while processing your request.'
-            # Log the error for debugging purposes
-            print(f"Error: {str(e)}")
-            return render_template('signin.html', error_message=error_message)
-
-        finally:
-            # Close the cursor and connection
-            cursor.close()
-            cnx.close()
+        # Close the cursor and connection
+        cursor.close()
+        cnx.close()
 
     # If it's a GET request and the user is already signed in, redirect to the home page
     if 'email' in session:
