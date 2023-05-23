@@ -1,0 +1,125 @@
+body {
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .shop-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .shop-container h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #333;
+  }
+  
+  .shop-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .shop-container li {
+    width: 300px;
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .shop-container li:hover {
+    transform: translateY(-5px);
+  }
+  
+  .shop-container h3 {
+    font-size: 20px;
+    margin-top: 0;
+    color: #333;
+  }
+  
+  .shop-container p {
+    margin-top: 10px;
+    color: #777;
+  }
+  
+  .shop-container .price {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .shop-container img {
+    width: 250px;
+    height: 250px;
+    margin-top: 10px;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+  
+  .shop-container .category {
+    margin-top: 10px;
+    color: #555;
+    font-style: italic;
+  }
+  
+  .shop-container .category-container {
+    margin-bottom: 20px;
+  }
+  
+  .shop-container #category-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .shop-container #category-list li {
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .shop-container #category-list li.active {
+    font-weight: bold;
+    color: #ff9900;
+  }
+  
+  .shop-container #product-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .shop-container #product-list li {
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .shop-container #product-list li:hover {
+    transform: scale(1.05);
+  }
+  
+  .shop-container #product-list li img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .shop-container #product-list li:hover img {
+    opacity: 0.8;
+  }
