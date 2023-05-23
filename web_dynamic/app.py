@@ -16,6 +16,12 @@ db_config = {
 # Create a cursor to interact with the database
 cursor = None
 
+# Route for home page
+@app.route('/')
+@app.route('/home')
+def home():
+    return render_template('index.html')
+
 # Route for the product page
 @app.route('/products')
 def products():
@@ -64,6 +70,12 @@ def signup():
         return 'User signed up successfully'
     else:
         return render_template('signup.html')
+
+
+# Route for sign in
+@app.route('/signin')
+def signin():
+    return render_template('signin.html')
 
 if __name__ == '__main__':
     app.run()
