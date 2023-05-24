@@ -1,22 +1,22 @@
-/* Footer styles */
+/* Footer */
 footer {
-  position: relative;
-  background-color: #f9f9f9;
-  padding: 30px 0;
-  left: 0;
-  bottom: 0;
-  width: 100%;
+  background-color: #f5f5f5;
+  color: #333;
+  padding: 40px 0;
+  font-family: Arial, sans-serif;
 }
 
+/* Container */
 footer .container {
-  max-width: 100%;
-  padding: 0 20px;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
+/* Footer Logo */
 footer .footer-logo {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 footer .footer-logo img {
@@ -24,25 +24,27 @@ footer .footer-logo img {
   height: auto;
 }
 
+/* Footer Columns */
 footer .footer-columns {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 footer .footer-column {
   width: 100%;
   max-width: 300px;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 footer .footer-column h3 {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
+/* Unordered List */
 footer ul {
   list-style: none;
   margin: 0;
@@ -50,20 +52,23 @@ footer ul {
 }
 
 footer ul li a {
-  color: #333;
+  color: #555;
   text-decoration: none;
   font-size: 14px;
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
+/* Social Media Icons */
 footer .social-media-icons {
   display: flex;
-  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
 }
 
 footer .social-media-icons li {
-  margin-right: 10px;
+  margin-right: 12px;
 }
 
 footer .social-media-icons li:last-child {
@@ -71,27 +76,44 @@ footer .social-media-icons li:last-child {
 }
 
 footer .social-media-icons a {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  color: #fff;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* SVG Icon Size */
+footer .social-media-icons a img {
   width: 30px;
   height: 30px;
-  text-align: center;
-  line-height: 30px;
-  color: #fff;
-  background-color: #333;
-  border-radius: 50%;
-  transition: all 0.3s ease-in-out;
 }
 
 footer .social-media-icons a:hover {
-  transform: scale(1.2);
+  background-color: blanchedalmond;
 }
 
+/* Footer Bottom */
 footer .footer-bottom {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 40px;
   font-size: 12px;
 }
 
 footer .footer-bottom p {
-  color: #999;
+  color: #777;
+}
+
+/* Social Media Icons Animation */
+footer .social-media-icons a {
+  transition: transform 0.3s ease-in-out;
+}
+
+footer .social-media-icons a:hover {
+  transform: scale(1.2);
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout</title>
+</head>
+<body>
+    <h1>Checkout</h1>
+    
+    <form action="{{ url_for('checkout') }}" method="POST">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.Name }}</td>
+                        <td>{{ item.Description }}</td>
+                        <td>{{ item.Price }}</td>
+                        <td><img src="{{ item.Image }}" alt="{{ item.Name }}" height="100"></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <p>Total Amount: {{ total_amount }}</p>
+        
+        <input type="submit" value="Place Order">
+    </form>
+</body>
+</html>

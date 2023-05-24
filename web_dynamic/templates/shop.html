@@ -5,11 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/shop.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/header.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
     <script src="{{ url_for('static', filename='scripts/shop.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/cart.js') }}"></script>
     <title>Fresh Basket Shop</title>
 </head>
 <body>
@@ -40,7 +42,7 @@
               <a href="{{ url_for('profile') }}"><i class="material-icons icon-large">account_circle</i></a>
             </div>
             <div class="cart">
-              <a href="#"><i class="material-icons">shopping_cart</i><span>0</span></a>
+              <a href="{{ url_for('cart') }}"><i class="material-icons">shopping_cart</i><span id="cart-count">0</span></a>
             </div>
           </div>
         </div>
@@ -65,6 +67,10 @@
                 <h3>{{ product[1] }}</h3>
                 <p>{{ product[2] }}</p>
                 <p class="price">Price: Ksh {{ product[3] }}</p>
+                <form action="{{ url_for('cart') }}" method="POST">
+                  <input type="hidden" name="product_id" value="{{ product[0] }}">
+                  <input type="submit" value="Add to Cart" class="add-to-cart-button">
+              </form>
             </li>
             {% endfor %}
         </ul>
@@ -96,19 +102,19 @@
             <div class="footer-column">
               <h3>Follow Us</h3>
               <ul class="social-media-icons">
-                <li><a href="#"><i class="material-icons">facebook</i></a></li>
-                <li><a href="#"><i class="material-icons">twitter</i></a></li>
-                <li><a href="#"><i class="material-icons">instagram</i></a></li>
-                <li><a href="#"><i class="material-icons">pinterest</i></a></li>
+                <li><a href="https://web.facebook.com/profile.php?id=100089080427306"><img src="{{ url_for('static', filename='images/facebook1.svg') }}" alt="facebook"></a></li>
+                  <li><a href="https://twitter.com/Theotsori"><img src="{{ url_for('static', filename='images/twitter1.svg') }}" alt="twitter"></a></li>
+                  <li><a href="https://github.com/theotsori"><img src="{{ url_for('static', filename='images/github1.svg') }}" alt="github"></a></li>
+                  <li><a href="https://wa.me/message/XPS4G47REHWYD1"><img src="{{ url_for('static', filename='images/whatsapp1.svg') }}" alt="whatsapp"></a></li>
               </ul>
             </div>
             <div class="footer-column">
                 <h3>The Team</h3>
                 <ul class="social-media-icons">
-                  <li><a href="https://web.facebook.com/profile.php?id=100089080427306"><i class="material-icons">facebook</i></a></li>
-                  <li><a href="https://twitter.com/Theotsori"><i class="material-icons">twitter</i></a></li>
-                  <li><a href="https://github.com/theotsori"><i class="material-icons">github</i></a></li>
-                  <li><a href="https://wa.me/message/XPS4G47REHWYD1"><i class="material-icons">WhatsApp</i></a></li>
+                  <li><a href="https://web.facebook.com/profile.php?id=100089080427306"><img src="{{ url_for('static', filename='images/facebook.svg') }}" alt="facebook"></a></li>
+                  <li><a href="https://twitter.com/Theotsori"><img src="{{ url_for('static', filename='images/twitter.svg') }}" alt="twitter"></a></li>
+                  <li><a href="https://github.com/theotsori"><img src="{{ url_for('static', filename='images/github.svg') }}" alt="github"></a></li>
+                  <li><a href="https://wa.me/message/XPS4G47REHWYD1"><img src="{{ url_for('static', filename='images/whatsapp.svg') }}" alt="whatsapp"></a></li>
                 </ul>
             </div>
           </div>

@@ -123,3 +123,18 @@ body {
   .shop-container #product-list li:hover img {
     opacity: 0.8;
   }
+
+  .add-to-cart-button {
+    background-color: #4caf50;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+
+  .add-to-cart-button:hover {
+    background-color: #45a049;
+  }
