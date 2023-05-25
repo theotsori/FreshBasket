@@ -1,27 +1,30 @@
-// Function to handle adding a product to the cart
-function addToCart(productId) {
+$(document).ready(function() {
+  // Handle form submission
+  $('form').submit(function(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+    
+    // Get the product ID from the form
+    var productID = $(this).find('input[name="product_id"]').val();
+    
+    // Send an AJAX request to add the product to the cart
     $.ajax({
       url: '/cart/add',
       method: 'POST',
-      data: { product_id: productId },
+      data: { product_id: productID },
       success: function(response) {
-        // Update the cart count in the UI
-        updateCartCount(response.cart_count);
+        // Update the cart count on the page
+        $('#cart-count').text(response.cart_count);
+
+        // Display a success message
+        $('#message').text('Item added to cart');
+
+        // Fetch and display the updated cart items
+        fetchCartItems();
       },
       error: function(error) {
-        console.log('Error:', error);
+        // Handle error if the request fails
+        console.log('Error occurred during adding item to cart.');
       }
     });
-  }
-
-  // Function to update the cart count in the UI
-  function updateCartCount(count) {
-    $('#cart-count').text(count);
-  }
-
-  // Event delegation to handle the "Add to Cart" button click
-  $('#product-list').on('click', '.add-to-cart-button', function(event) {
-    event.preventDefault();
-    var productId = $(this).siblings('[name="product_id"]').val();
-    addToCart(productId);
   });
+});

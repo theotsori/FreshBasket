@@ -2,6 +2,7 @@
 
 from flask import Flask, render_template, request, session, redirect, url_for, jsonify
 import mysql.connector
+import bcrypt
 
 app = Flask(__name__)
 app.secret_key = 'my_secret_key'
@@ -51,23 +52,8 @@ def products():
     return render_template('shop.html', products=products)
 
 
-@app.route('/cart', methods=['GET', 'POST'])
+@app.route('/cart', methods=['GET'])
 def cart():
-    if request.method == 'POST':
-        product_id = request.form['product_id']
-        cart_id = get_cart_id()  # Retrieve the cart ID for the current user
-
-        # Add the selected product to the cart
-        if cart_id is not None:
-            cnx = mysql.connector.connect(**db_config)
-            cur = cnx.cursor()
-            cur.execute("INSERT INTO CartProduct (CartId, ProductId) VALUES (%s, %s)", (cart_id, product_id))
-            cnx.commit()
-            cur.close()
-            cnx.close()
-
-        return redirect(url_for('cart'))
-
     # Retrieve the cart items for the current user
     cart_id = get_cart_id()
     cnx = mysql.connector.connect(**db_config)
@@ -108,9 +94,9 @@ def add_to_cart():
         cur.close()
         cnx.close()
 
-    # Return the updated cart count as JSON response
-    count = get_cart_count()
-    return jsonify(cart_count=count)
+    # Return the updated cart count
+    cart_count = get_cart_count()
+    return str(cart_count)
 
 
 @app.route('/cart/remove', methods=['POST'])
@@ -182,19 +168,26 @@ def get_cart_count():
     cart_id = get_cart_id()
 
     if cart_id is None:
-        return 0
+        cart_count = 0
+    else:
+        # Connect to the MySQL database
+        cnx = mysql.connector.connect(**db_config)
+        cur = cnx.cursor()
 
-    # Connect to the MySQL database
-    cnx = mysql.connector.connect(**db_config)
-    cur = cnx.cursor()
+        # Count the number of items in the cart
+        cur.execute("SELECT COUNT(*) FROM CartProduct WHERE CartId = %s", (cart_id,))
+        cart_count = cur.fetchone()[0]
 
-    # Count the number of items in the cart
-    cur.execute("SELECT COUNT(*) FROM CartProduct WHERE CartId = %s", (cart_id,))
-    cart_count = cur.fetchone()[0]
+        # Update the cart count in the session
+        session['cart_count'] = cart_count
 
-    # Close the cursor and connection
-    cur.close()
-    cnx.close()
+        # Update the cart count in the database
+        cur.execute("UPDATE Cart SET Count = %s WHERE Id = %s", (cart_count, cart_id))
+        cnx.commit()
+
+        # Close the cursor and connection
+        cur.close()
+        cnx.close()
 
     return cart_count
 
@@ -227,6 +220,7 @@ def orders():
     return render_template('orders.html', orders=orders)
 
 
+# Route for sign up
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
@@ -235,6 +229,9 @@ def signup():
         email = request.form.get('email')
         password = request.form.get('password')
         phone = request.form.get('phone')
+
+        # Hash the password
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
         # Connect to the MySQL database
         cnx = mysql.connector.connect(**db_config)
@@ -252,7 +249,7 @@ def signup():
         else:
             # Insert the user data into the database
             insert_query = "INSERT INTO User (Name, Email, Password, Phone) VALUES (%s, %s, %s, %s)"
-            user_data = (name, email, password, phone)
+            user_data = (name, email, hashed_password.decode('utf-8'), phone)  # Store the hashed password
             cursor.execute(insert_query, user_data)
 
             # Commit the changes
@@ -283,17 +280,20 @@ def signin():
         cnx = mysql.connector.connect(**db_config)
         cursor = cnx.cursor()
 
-        # Verify the user's credentials
-        query = "SELECT Email FROM User WHERE Email = %s AND Password = %s"
-        cursor.execute(query, (email, password))
+        # Retrieve the hashed password from the database
+        query = "SELECT Password FROM User WHERE Email = %s"
+        cursor.execute(query, (email,))
         result = cursor.fetchone()
 
         if result:
-            # If credentials are valid, create a session for the user
-            session['email'] = email
+            hashed_password = result[0]
+            # Verify the password
+            if bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8')):
+                # If credentials are valid, create a session for the user
+                session['email'] = email
 
-            # Redirect to the home page
-            return redirect(url_for('home'))
+                # Redirect to the home page
+                return redirect(url_for('home'))
 
         # User not found or invalid credentials
         return render_template('signup.html')

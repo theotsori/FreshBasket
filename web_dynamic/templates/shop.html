@@ -42,7 +42,7 @@
               <a href="{{ url_for('profile') }}"><i class="material-icons icon-large">account_circle</i></a>
             </div>
             <div class="cart">
-              <a href="{{ url_for('cart') }}"><i class="material-icons">shopping_cart</i><span id="cart-count">0</span></a>
+              <a href="{{ url_for('cart') }}"><i class="material-icons">shopping_cart</i><span id="cart-count">{{ cart_count }}</span></a>
             </div>
           </div>
         </div>
@@ -60,6 +60,8 @@
                 <li data-category="Fish">Fish</li>
             </ul>
         </div>
+        <div id="message"></div>
+        <div id="cart-items"></div>
         <ul id="product-list">
             {% for product in products %}
             <li data-category="{{ product[5] }}">
@@ -67,8 +69,8 @@
                 <h3>{{ product[1] }}</h3>
                 <p>{{ product[2] }}</p>
                 <p class="price">Price: Ksh {{ product[3] }}</p>
-                <form action="{{ url_for('cart') }}" method="POST">
-                  <input type="hidden" name="product_id" value="{{ product[0] }}">
+                <form action="{{ url_for('add_to_cart') }}" method="POST">
+                  <input type="hidden" name="product_id" value="{{ product[6] }}">
                   <input type="submit" value="Add to Cart" class="add-to-cart-button">
               </form>
             </li>
