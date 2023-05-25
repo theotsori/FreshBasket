@@ -30,8 +30,8 @@
             <li><a href="{{ url_for('recipe') }}">Recipes</a></li>
             <li><a href="#">Videos</a></li>
             <li>
-              <form>
-                <input type="search" placeholder="Search the grocery shop...">
+              <form action="/search" method="GET">
+                <input type="search" name="query" placeholder="Search the grocery shop...">
                 <button type="submit"><i class="material-icons">search</i></button>
               </form>
             </li>

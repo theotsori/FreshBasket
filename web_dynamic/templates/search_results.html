@@ -7,12 +7,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/shop.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/results.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/header.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
-    <script src="{{ url_for('static', filename='scripts/shop.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/cart.js') }}"></script>
-    <title>Fresh Basket Shop</title>
+    <title>Frb: Search Results</title>
 </head>
 <body>
     <header class="header">
@@ -47,34 +46,30 @@
           </div>
         </div>
     </header>
-    <div class="shop-container">
-        <h1>Product Catalog</h1>
-        <div class="category-container">
-            <h3>Categories</h3>
-            <ul id="category-list">
-                <li data-category="all" class="active">All</li>
-                <li data-category="Fruit">Fruits</li>
-                <li data-category="Dairy">Dairy</li>
-                <li data-category="Bread">Breads</li>
-                <li data-category="Meat">Meat</li>
-                <li data-category="Fish">Fish</li>
+    <section class="search-results">
+        <h1>Search Results</h1>
+        <p>Search for: {{ query }}</p>
+        <hr>
+        {% if products %}
+            <h2>Products Found</h2>
+            <ul class="product-list">
+                {% for product in products %}
+                    <li class="product-item">
+                        <img src="{{ url_for('static', filename=product[4]) }}" alt="{{ product[1] }}">
+                        <div class="product-info">
+                            <h3>{{ product[1] }}</h3>
+                            <p class="description">{{ product[2] }}</p>
+                            <p class="price">Price: {{ product[3] }}</p>
+                        </div>
+                    </li>
+                {% endfor %}
             </ul>
-        </div>
-        <ul id="product-list">
-            {% for product in products %}
-            <li data-category="{{ product[5] }}">
-                <img src="{{ url_for('static', filename=product[4]) }}" alt="{{ product[1] }}">
-                <h3>{{ product[1] }}</h3>
-                <p>{{ product[2] }}</p>
-                <p class="price">Price: Ksh {{ product[3] }}</p>
-                <form action="{{ url_for('cart') }}" method="POST">
-                  <input type="hidden" name="product_id" value="{{ product[0] }}">
-                  <input type="submit" value="Add to Cart" class="add-to-cart-button">
-              </form>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
+        {% else %}
+            <p>No products found.</p>
+        {% endif %}
+        <hr>
+        <a href="{{ url_for('products') }}">Back to Products</a>
+    </section>
     <footer>
         <div class="container">
           <div class="footer-logo">

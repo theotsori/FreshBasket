@@ -1,119 +1,75 @@
-/* Footer */
+/* Footer Styles */
 footer {
-  background-color: #f5f5f5;
-  color: #333;
+  background-color: #f9f9f9;
   padding: 40px 0;
-  font-family: Arial, sans-serif;
 }
 
-/* Container */
-footer .container {
-  max-width: 1200px;
+.container {
+  max-width: 960px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* Footer Logo */
-footer .footer-logo {
+.footer-logo {
   text-align: center;
-  margin-bottom: 30px;
-}
-
-footer .footer-logo img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Footer Columns */
-footer .footer-columns {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 30px;
-}
-
-footer .footer-column {
-  width: 100%;
-  max-width: 300px;
-  margin-bottom: 50px;
-}
-
-footer .footer-column h3 {
-  font-size: 16px;
-  font-weight: bold;
   margin-bottom: 20px;
 }
 
-/* Unordered List */
-footer ul {
+.footer-logo img {
+  max-width: 150px;
+}
+
+.footer-columns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.footer-column {
+  flex: 0 0 calc(25% - 20px);
+  margin-bottom: 20px;
+}
+
+.footer-column h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.footer-column ul {
   list-style: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 
-footer ul li a {
-  color: #555;
+.footer-column ul li {
+  margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+  color: #777;
   text-decoration: none;
-  font-size: 14px;
-  display: block;
-  margin-bottom: 12px;
 }
 
-/* Social Media Icons */
-footer .social-media-icons {
+.social-media-icons {
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-top: 30px;
 }
 
-footer .social-media-icons li {
-  margin-right: 12px;
+.social-media-icons li {
+  margin-right: 10px;
 }
 
-footer .social-media-icons li:last-child {
+.social-media-icons li:last-child {
   margin-right: 0;
 }
 
-footer .social-media-icons a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  text-align: center;
-  color: #fff;
-  background-color: #fff;
-  border-radius: 50%;
-  transition: background-color 0.3s ease-in-out;
-}
-
-/* SVG Icon Size */
-footer .social-media-icons a img {
+.social-media-icons img {
   width: 30px;
   height: 30px;
 }
 
-footer .social-media-icons a:hover {
-  background-color: blanchedalmond;
-}
-
-/* Footer Bottom */
-footer .footer-bottom {
+.footer-bottom {
   text-align: center;
-  margin-top: 40px;
-  font-size: 12px;
-}
-
-footer .footer-bottom p {
+  margin-top: 20px;
   color: #777;
-}
-
-/* Social Media Icons Animation */
-footer .social-media-icons a {
-  transition: transform 0.3s ease-in-out;
-}
-
-footer .social-media-icons a:hover {
-  transform: scale(1.2);
 }

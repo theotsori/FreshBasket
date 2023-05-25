@@ -163,47 +163,59 @@ nav button[type="submit"]:hover {
 }
 
 /* Media query for small screens */
-@media (max-width: 768px) {
-  .logo img {
-    max-height: 30px;
+@media only screen and (max-width: 600px) {
+  .header {
+    padding: 10px;
   }
-
-  nav ul {
-    display: none;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
-  .menu-toggle i {
-    font-size: 24px;
-  }
-
-  .show-menu nav ul {
-    display: flex;
+  
+  header .container {
     flex-direction: column;
     align-items: flex-start;
   }
-
-  .show-menu nav li {
-    margin-left: 0;
-    margin-bottom: 10px;
+  
+  nav {
+    margin-top: 10px;
   }
-
-  .user {
+  
+  nav ul {
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  nav li {
+    margin: 5px;
+  }
+  
+  .menu-toggle {
+    display: block;
+  }
+  
+  .menu-toggle:before {
+    content: "\2630";
+    font-size: 24px;
+  }
+  
+  nav {
     display: none;
   }
-
-  .sign-in {
+  
+  nav.active {
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
   }
-
-  .menu-toggle.clicked + nav ul {
-    display: flex;
+  
+  nav.active li {
+    margin: 10px;
   }
-
-  .menu-toggle.clicked .material-icons {
-    transform: rotate(90deg);
+  
+  nav.active li:first-child {
+    margin-top: 20px;
+  }
+  
+  nav input[type="search"] {
+    margin-right: 0;
+    margin-bottom: 10px;
   }
 }
