@@ -52,174 +52,6 @@ def products():
     return render_template('shop.html', products=products)
 
 
-@app.route('/cart', methods=['GET'])
-def cart():
-    # Retrieve the cart items for the current user
-    cart_id = get_cart_id()
-    cnx = mysql.connector.connect(**db_config)
-    cur = cnx.cursor()
-    cur.execute(
-        "SELECT cp.CartId, p.Name, p.Description, p.Price, p.Image FROM CartProduct cp JOIN Product p ON cp.ProductId = p.Id WHERE cp.CartId = %s",
-        (cart_id,))
-    cart_items = cur.fetchall()
-    cur.close()
-    cnx.close()
-
-    # Retrieve the cart count for the current user
-    cart_count = get_cart_count()
-
-    return render_template('cart.html', cart_items=cart_items, cart_count=cart_count)
-
-
-@app.route('/cart/count')
-def cart_count():
-    # Retrieve the cart count from the database or session
-    count = get_cart_count()  # Implement this function to fetch the cart count
-
-    # Return the cart count as JSON response
-    return jsonify(cart_count=count)
-
-
-@app.route('/cart/add', methods=['POST'])
-def add_to_cart():
-    product_id = request.form['product_id']
-    cart_id = get_cart_id()  # Retrieve the cart ID for the current user
-
-    # Add the selected product to the cart
-    if cart_id is not None:
-        cnx = mysql.connector.connect(**db_config)
-        cur = cnx.cursor()
-        cur.execute("INSERT INTO CartProduct (CartId, ProductId) VALUES (%s, %s)", (cart_id, product_id))
-        cnx.commit()
-        cur.close()
-        cnx.close()
-
-    # Return the updated cart count
-    cart_count = get_cart_count()
-    return str(cart_count)
-
-
-@app.route('/cart/remove', methods=['POST'])
-def remove_from_cart():
-    product_id = request.form['product_id']
-    cart_id = get_cart_id()  # Retrieve the cart ID for the current user
-
-    # Remove the selected product from the cart
-    if cart_id is not None:
-        cnx = mysql.connector.connect(**db_config)
-        cur = cnx.cursor()
-        cur.execute("DELETE FROM CartProduct WHERE CartId = %s AND ProductId = %s", (cart_id, product_id))
-        cnx.commit()
-        cur.close()
-        cnx.close()
-
-    # Return the updated cart count as JSON response
-    count = get_cart_count()
-    return jsonify(cart_count=count)
-
-
-@app.route('/cart/checkout', methods=['POST'])
-def checkout():
-    cart_id = get_cart_id()  # Retrieve the cart ID for the current user
-    total_amount = calculate_total_amount(cart_id)  # Calculate the total amount of the order
-
-    # Create a new order
-    cnx = mysql.connector.connect(**db_config)
-    cur = cnx.cursor()
-    cur.execute("INSERT INTO `Order` (UserId, Status, Total) VALUES (%s, %s, %s)", (get_user_id(), 'pending', total_amount))
-    order_id = cur.lastrowid
-
-    # Move cart items to the order
-    cur.execute("INSERT INTO OrderProduct (OrderId, ProductId) SELECT %s, ProductId FROM CartProduct WHERE CartId = %s", (order_id, cart_id))
-
-    # Clear the cart
-    cur.execute("DELETE FROM CartProduct WHERE CartId = %s", (cart_id,))
-
-    cnx.commit()
-    cur.close()
-    cnx.close()
-
-    return redirect(url_for('orders'))
-
-
-def get_user_id():
-    # Retrieve the user ID for the current user (you need to implement this logic)
-    user_id = session.get('user_id')
-    return user_id
-
-
-def get_cart_id():
-    # Retrieve the cart ID for the current user
-    cnx = mysql.connector.connect(**db_config)
-    cur = cnx.cursor()
-    cur.execute("SELECT Id FROM Cart WHERE UserId = %s", (get_user_id(),))
-    cart_row = cur.fetchone()
-    cur.close()
-    cnx.close()
-    if cart_row is not None:
-        return cart_row[0]
-    else:
-        # Handle the case when cart ID is not found
-        return None
-
-
-def get_cart_count():
-    # Retrieve the cart ID for the current user
-    cart_id = get_cart_id()
-
-    if cart_id is None:
-        cart_count = 0
-    else:
-        # Connect to the MySQL database
-        cnx = mysql.connector.connect(**db_config)
-        cur = cnx.cursor()
-
-        # Count the number of items in the cart
-        cur.execute("SELECT COUNT(*) FROM CartProduct WHERE CartId = %s", (cart_id,))
-        cart_count = cur.fetchone()[0]
-
-        # Update the cart count in the session
-        session['cart_count'] = cart_count
-
-        # Update the cart count in the database
-        cur.execute("UPDATE Cart SET Count = %s WHERE Id = %s", (cart_count, cart_id))
-        cnx.commit()
-
-        # Close the cursor and connection
-        cur.close()
-        cnx.close()
-
-    return cart_count
-
-
-def calculate_total_amount(cart_id):
-    # Calculate the total amount of the order
-    cnx = mysql.connector.connect(**db_config)
-    cur = cnx.cursor()
-    cur.execute(
-        "SELECT SUM(p.Price) AS total_amount FROM CartProduct cp JOIN Product p ON cp.ProductId = p.Id WHERE cp.CartId = %s",
-        (cart_id,))
-    total_amount = cur.fetchone()[0]
-    cur.close()
-    cnx.close()
-    return total_amount
-
-
-@app.route('/orders')
-def orders():
-    # Retrieve the orders for the current user
-    cnx = mysql.connector.connect(**db_config)
-    cur = cnx.cursor()
-    cur.execute(
-        "SELECT op.OrderId, p.Name, p.Description, p.Price, p.Image FROM OrderProduct op JOIN Product p ON op.ProductId = p.Id WHERE op.OrderId IN (SELECT Id FROM `Order` WHERE UserId = %s)",
-        (get_user_id(),))
-    orders = cur.fetchall()
-    cur.close()
-    cnx.close()
-
-    return render_template('orders.html', orders=orders)
-
-
 # Route for sign up
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -368,6 +200,127 @@ def search():
 
     # Render the template and pass the product data to it
     return render_template('search_results.html', products=products, query=query)
+
+
+# Route for cart
+@app.route('/cart')
+def cart():
+    # Check if the user is authenticated
+    if 'email' not in session:
+        return redirect(url_for('signin'))
+
+    # Connect to the MySQL database
+    cnx = mysql.connector.connect(**db_config)
+    cursor = cnx.cursor()
+
+    # Retrieve cart data for the user from the database
+    select_query = """
+    SELECT P.Id, P.Name, P.Description, P.Price, P.Image, P.Category
+    FROM CartProduct CP
+    JOIN Product P ON CP.ProductId = P.Id
+    JOIN Cart C ON CP.CartId = C.Id
+    JOIN User U ON C.UserId = U.Id
+    WHERE U.Email = %s
+    """
+    cursor.execute(select_query, (session['email'],))
+    cart_products = cursor.fetchall()
+
+    # Calculate the total price of the cart
+    total_query = """
+    SELECT SUM(P.Price)
+    FROM CartProduct CP
+    JOIN Product P ON CP.ProductId = P.Id
+    JOIN Cart C ON CP.CartId = C.Id
+    JOIN User U ON C.UserId = U.Id
+    WHERE U.Email = %s
+    """
+    cursor.execute(total_query, (session['email'],))
+    total_price = cursor.fetchone()[0]
+
+    # Close the cursor and connection
+    cursor.close()
+    cnx.close()
+
+    # Render the template and pass the cart data to it
+    return render_template('cart.html', cart_products=cart_products, total_price=total_price)
+
+
+# Route for adding a product to the cart
+@app.route('/add_to_cart', methods=['POST'])
+def add_to_cart():
+    if 'email' not in session:
+        return redirect(url_for('signin'))
+
+    # Retrieve the product ID from the request form
+    product_id = request.form.get('product_id')
+
+    # Connect to the MySQL database
+    cnx = mysql.connector.connect(**db_config)
+    cursor = cnx.cursor()
+
+    # Retrieve the user's cart ID
+    select_cart_query = "SELECT Id FROM Cart WHERE UserId = (SELECT Id FROM User WHERE Email = %s)"
+    cursor.execute(select_cart_query, (session['email'],))
+    cart_row = cursor.fetchone()
+
+    # Check if the user has an active cart
+    if cart_row:
+        cart_id = cart_row[0]
+    else:
+        # If the user does not have a cart, create a new cart
+        insert_cart_query = "INSERT INTO Cart (UserId) SELECT Id FROM User WHERE Email = %s"
+        cursor.execute(insert_cart_query, (session['email'],))
+        cnx.commit()
+
+        # Retrieve the new cart ID
+        cart_id = cursor.lastrowid
+
+    # Insert the product into the user's cart
+    insert_cart_product_query = "INSERT INTO CartProduct (CartId, ProductId) VALUES (%s, %s)"
+    cart_product_data = (cart_id, product_id)
+    cursor.execute(insert_cart_product_query, cart_product_data)
+    cnx.commit()
+
+    # Close the cursor and connection
+    cursor.close()
+    cnx.close()
+
+    # Redirect back to the products page
+    return redirect(url_for('products'))
+
+
+# Route for removing a product from the cart
+@app.route('/remove_from_cart', methods=['POST'])
+def remove_from_cart():
+    # Check if the user is authenticated
+    if 'email' not in session:
+        return redirect(url_for('signin'))
+
+    # Get the product ID from the request form
+    product_id = request.form.get('product_id')
+
+    # Connect to the MySQL database
+    cnx = mysql.connector.connect(**db_config)
+    cursor = cnx.cursor()
+
+    # Retrieve the user's cart ID
+    select_cart_query = "SELECT Id FROM Cart WHERE UserId = (SELECT Id FROM User WHERE Email = %s)"
+    cursor.execute(select_cart_query, (session['email'],))
+    cart_id = cursor.fetchone()[0]
+
+    # Delete the product from the user's cart
+    delete_query = "DELETE FROM CartProduct WHERE CartId = %s AND ProductId = %s"
+    cursor.execute(delete_query, (cart_id, product_id))
+
+    # Commit the changes
+    cnx.commit()
+
+    # Close the cursor and connection
+    cursor.close()
+    cnx.close()
+
+    # Redirect back to the cart page
+    return redirect(url_for('cart'))
 
 
 if __name__ == '__main__':
