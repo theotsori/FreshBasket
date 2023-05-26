@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Checkout</title>
+    <title>Order Confirmation</title>
 </head>
 <body>
-    <h1>Checkout</h1>
+    <h1>Order Confirmation</h1>
+    <h2>Order ID: {{ order_id }}</h2>
     <table>
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Price</th>
@@ -17,21 +17,17 @@
             </tr>
         </thead>
         <tbody>
-            {% for product in cart_products %}
+            {% for product in order_products %}
             <tr>
-                <td>{{ product[0] }}</td>
                 <td>{{ product[1] }}</td>
                 <td>{{ product[2] }}</td>
                 <td>{{ product[3] }}</td>
-                <td>{{ product[4] }}</td>
+                <td><img src="{{ product[4] }}" alt="Product Image" width="100"></td>
                 <td>{{ product[5] }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     <p>Total Price: {{ total_price }}</p>
-    <form action="{{ url_for('place_order') }}" method="POST">
-        <button type="submit">Place Order</button>
-    </form>
 </body>
 </html>

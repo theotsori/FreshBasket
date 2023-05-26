@@ -1,49 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Cart</title>
-    <script src="{{ url_for('static', filename='scripts/cart.js') }}"></script>
-    <!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/cart.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
+    <title>Fresh Basket: Cart</title>
 </head>
 <body>
     <h1>Cart</h1>
 
-    {% if cart_items %}
     <table>
         <thead>
             <tr>
-                <th>Name</th>
+                <th>Product ID</th>
+                <th>Product Name</th>
                 <th>Description</th>
                 <th>Price</th>
                 <th>Image</th>
-                <th>Action</th>
+                <th>Category</th>
             </tr>
         </thead>
         <tbody>
-            {% for item in cart_items %}
+            {% for product in cart_products %}
             <tr>
-                <td>{{ item.Name }}</td>
-                <td>{{ item.Description }}</td>
-                <td>{{ item.Price }}</td>
-                <td><img src="{{ item.Image }}" alt="{{ item.Name }}" height="100"></td>
+                <td>{{ product[0] }}</td>
+                <td>{{ product[1] }}</td>
+                <td>{{ product[2] }}</td>
+                <td>Ksh {{ product[3] }}</td>
+                <td><img src="{{ url_for('static', filename=product[4]) }}" alt="{{ product[4] }}"></td>
+                <td>{{ product[5] }}</td>
                 <td>
                     <form action="{{ url_for('remove_from_cart') }}" method="POST">
-                        <input type="hidden" name="product_id" value="{{ item.Id }}">
-                        <input type="submit" value="Remove">
+                        <input type="hidden" name="product_id" value="{{ product[0] }}">
+                        <button type="submit">Remove</button>
                     </form>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    {% else %}
-    <p>Your cart is empty.</p>
-    {% endif %}
 
-    <p>Cart Count: <span id="cart-count">{{ cart_count }}</span></p>
+    <p>Total Price: Ksh {{ total_price }}</p>
 
     <form action="{{ url_for('checkout') }}" method="POST">
-        <input type="submit" value="Checkout">
+        <button type="submit">Proceed to Checkout</button>
     </form>
+    <footer>
+        <div class="container">
+          <div class="footer-logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Fresh Basket Logo">
+          </div>
+          <div class="footer-columns">
+            <div class="footer-column">
+              <h3>Fresh Basket</h3>
+              <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms & Conditions</a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h3>Categories</h3>
+              <ul>
+                <li><a href="#">Fresh Produce</a></li>
+                <li><a href="#">Meat & Poultry</a></li>
+                <li><a href="#">Beverages</a></li>
+                <li><a href="#">Bakery & Bread </a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h3>Follow Us</h3>
+              <ul class="social-media-icons">
+                <li><a href="https://web.facebook.com/profile.php?id=100089080427306"><img src="{{ url_for('static', filename='images/facebook1.svg') }}" alt="facebook"></a></li>
+                  <li><a href="https://twitter.com/Theotsori"><img src="{{ url_for('static', filename='images/twitter1.svg') }}" alt="twitter"></a></li>
+                  <li><a href="https://github.com/theotsori"><img src="{{ url_for('static', filename='images/github1.svg') }}" alt="github"></a></li>
+                  <li><a href="https://wa.me/message/XPS4G47REHWYD1"><img src="{{ url_for('static', filename='images/whatsapp1.svg') }}" alt="whatsapp"></a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+                <h3>The Team</h3>
+                <ul class="social-media-icons">
+                  <li><a href="https://web.facebook.com/profile.php?id=100089080427306"><img src="{{ url_for('static', filename='images/facebook.svg') }}" alt="facebook"></a></li>
+                  <li><a href="https://twitter.com/Theotsori"><img src="{{ url_for('static', filename='images/twitter.svg') }}" alt="twitter"></a></li>
+                  <li><a href="https://github.com/theotsori"><img src="{{ url_for('static', filename='images/github.svg') }}" alt="github"></a></li>
+                  <li><a href="https://wa.me/message/XPS4G47REHWYD1"><img src="{{ url_for('static', filename='images/whatsapp.svg') }}" alt="whatsapp"></a></li>
+                </ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>© 2023 Fresh Basket. All Rights Reserved.</p>
+          </div>
+        </div>
+    </footer>
 </body>
 </html>

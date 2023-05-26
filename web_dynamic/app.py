@@ -323,5 +323,153 @@ def remove_from_cart():
     return redirect(url_for('cart'))
 
 
+@app.route('/checkout', methods=['GET', 'POST'])
+def checkout():
+    # Check if the user is authenticated
+    if 'email' not in session:
+        return redirect(url_for('signin'))
+
+    # Connect to the MySQL database
+    cnx = mysql.connector.connect(**db_config)
+    cursor = cnx.cursor()
+
+    # Retrieve cart data for the user from the database
+    select_query = """
+    SELECT P.Id, P.Name, P.Description, P.Price, P.Image, P.Category
+    FROM CartProduct CP
+    JOIN Product P ON CP.ProductId = P.Id
+    JOIN Cart C ON CP.CartId = C.Id
+    JOIN User U ON C.UserId = U.Id
+    WHERE U.Email = %s
+    """
+    cursor.execute(select_query, (session['email'],))
+    cart_products = cursor.fetchall()
+
+    # Calculate the total price of the cart
+    total_query = """
+    SELECT SUM(P.Price)
+    FROM CartProduct CP
+    JOIN Product P ON CP.ProductId = P.Id
+    JOIN Cart C ON CP.CartId = C.Id
+    JOIN User U ON C.UserId = U.Id
+    WHERE U.Email = %s
+    """
+    cursor.execute(total_query, (session['email'],))
+    total_price = cursor.fetchone()[0]
+
+    # Close the cursor and connection
+    cursor.close()
+    cnx.close()
+
+    # Render the template and pass the cart data to it
+    return render_template('checkout.html', cart_products=cart_products, total_price=total_price)
+
+
+@app.route('/place_order', methods=['POST'])
+def place_order():
+    # Check if the user is authenticated
+    if 'email' not in session:
+        return redirect(url_for('signin'))
+
+    # Retrieve the user's ID
+    cnx = mysql.connector.connect(**db_config)
+    cursor = cnx.cursor()
+
+    # Retrieve the UserId based on the user's email in the session
+    select_user_id_query = "SELECT Id FROM User WHERE Email = %s"
+    cursor.execute(select_user_id_query, (session['email'],))
+    user_id = cursor.fetchone()[0]
+
+    # Retrieve the user's cart ID
+    select_cart_query = "SELECT Id FROM Cart WHERE UserId = %s"
+    cursor.execute(select_cart_query, (user_id,))
+    cart_id = cursor.fetchone()[0]
+
+    # Calculate the total price of the order
+    total_query = """
+    SELECT SUM(P.Price)
+    FROM CartProduct CP
+    JOIN Product P ON CP.ProductId = P.Id
+    JOIN Cart C ON CP.CartId = C.Id
+    JOIN User U ON C.UserId = U.Id
+    WHERE U.Id = %s
+    """
+    cursor.execute(total_query, (user_id,))
+    total_price = cursor.fetchone()[0]
+
+    # Insert the order into the database
+    insert_order_query = "INSERT INTO `Order` (UserId, Status, Total) VALUES (%s, %s, %s)"
+    cursor.execute(insert_order_query, (user_id, 'processing', total_price))
+    cnx.commit()
+    order_id = cursor.lastrowid
+
+    # Retrieve the products from the user's cart
+    select_cart_products_query = "SELECT ProductId FROM CartProduct WHERE CartId = %s"
+    cursor.execute(select_cart_products_query, (cart_id,))
+    cart_products = cursor.fetchall()
+
+    # Insert the products into the OrderProduct table
+    insert_order_product_query = "INSERT INTO OrderProduct (OrderId, ProductId) VALUES (%s, %s)"
+    order_product_data = [(order_id, product_id) for product_id, in cart_products]
+    cursor.executemany(insert_order_product_query, order_product_data)
+    cnx.commit()
+
+    # Remove the products from the user's cart
+    delete_cart_products_query = "DELETE FROM CartProduct WHERE CartId = %s"
+    cursor.execute(delete_cart_products_query, (cart_id,))
+
+    # Commit the changes
+    cnx.commit()
+
+    # Close the cursor and connection
+    cursor.close()
+    cnx.close()
+
+    # Redirect to the order confirmation page
+    return redirect(url_for('order_confirmation', order_id=order_id))
+
+
+@app.route('/order_confirmation/<int:order_id>')
+def order_confirmation(order_id):
+    # Check if the user is authenticated
+    if 'email' not in session:
+        return redirect(url_for('signin'))
+
+    # Connect to the MySQL database
+    cnx = mysql.connector.connect(**db_config)
+    cursor = cnx.cursor()
+
+    # Retrieve the order details from the database
+    select_order_query = """
+    SELECT O.Id, P.Name, P.Description, P.Price, P.Image, P.Category
+    FROM `Order` O
+    JOIN OrderProduct OP ON O.Id = OP.OrderId
+    JOIN Product P ON OP.ProductId = P.Id
+    JOIN User U ON O.UserId = U.Id
+    WHERE U.Email = %s AND O.Id = %s
+    """
+    cursor.execute(select_order_query, (session['email'], order_id))
+    order_products = cursor.fetchall()
+
+    # Calculate the total price of the order
+    total_query = """
+    SELECT SUM(P.Price)
+    FROM `Order` O
+    JOIN OrderProduct OP ON O.Id = OP.OrderId
+    JOIN Product P ON OP.ProductId = P.Id
+    JOIN User U ON O.UserId = U.Id
+    WHERE U.Email = %s AND O.Id = %s
+    """
+    cursor.execute(total_query, (session['email'], order_id))
+    total_price = cursor.fetchone()[0]
+
+    # Close the cursor and connection
+    cursor.close()
+    cnx.close()
+
+    # Render the template and pass the order data to it
+    return render_template('order_confirmation.html', order_id=order_id, order_products=order_products, total_price=total_price)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
