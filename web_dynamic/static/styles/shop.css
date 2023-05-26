@@ -72,8 +72,8 @@ body {
   }
   
   #product-list img {
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
     margin-top: 10px;
     object-fit: contain;
     border-radius: 4px;
