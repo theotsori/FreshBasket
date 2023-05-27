@@ -38,14 +38,18 @@
         </tbody>
     </table>
     <p>Total Price: Ksh {{ total_price }}</p>
+    {% for ship in shipping_info %}
     <h2>Shipping Information</h2>
-        {% for ship in shipping %}
-          <p>Full Name: {{ ship[2] }}</p>
-          <p>Street Address: {{ ship[3] }}</p>
-          <p>City: {{ ship[4] }}</p>
-          <p>State/Province: {{ ship[5] }}</p>
-          <p>Postal Code: {{ ship[6] }}</p>
-          <p>Country: {{ ship[7] }}</p>
-        {% endfor %}
+    <p>Full Name: {{ ship[2] }}</p>
+    <p>Street Address: {{ ship[3] }}</p>
+    <p>City: {{ ship[4] }}</p>
+    <p>State/Province: {{ ship[5] }}</p>
+    <p>Postal Code: {{ ship[6] }}</p>
+    <p>Country: {{ ship[7] }}</p>
+    {% endfor %}
+    <h1>Thank You For Shopping with Fresh Basket</h1>
+    <form action="{{ url_for('home') }}" >
+        <button type="submit">Return to HomePage</button>
+    </form>
 </body>
 </html>

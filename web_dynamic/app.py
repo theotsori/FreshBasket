@@ -154,12 +154,21 @@ def profile():
         cursor.execute("SELECT * FROM User WHERE Email = %s", (session['email'],))
         user = cursor.fetchone()
 
+         # Retrieve shipping info from database
+        select_shipping_query = """
+        SELECT * FROM Shipping
+        INNER JOIN User ON Shipping.UserId = User.Id
+        WHERE User.Email = %s
+        """
+        cursor.execute(select_shipping_query, (session['email'],))
+        shipping_info = cursor.fetchall()
+
         # Close the cursor and connection
         cursor.close()
         cnx.close()
 
         # Render the template and pass the user data to it
-        return render_template('profile.html', user=user)
+        return render_template('profile.html', user=user, shipping_info=shipping_info)
     else:
         return redirect(url_for('signin'))
 
@@ -237,12 +246,21 @@ def cart():
     cursor.execute(total_query, (session['email'],))
     total_price = cursor.fetchone()[0]
 
+     # Retrieve shipping info from database
+    select_shipping_query = """
+    SELECT * FROM Shipping
+    INNER JOIN User ON Shipping.UserId = User.Id
+    WHERE User.Email = %s
+    """
+    cursor.execute(select_shipping_query, (session['email'],))
+    shipping_info = cursor.fetchall()
+
     # Close the cursor and connection
     cursor.close()
     cnx.close()
 
-    # Render the template and pass the cart data to it
-    return render_template('cart.html', cart_products=cart_products, total_price=total_price)
+    # Render the template and pass the cart data and shipping information to it
+    return render_template('cart.html', cart_products=cart_products, total_price=total_price, shipping_info=shipping_info)
 
 
 # Route for adding a product to the cart
@@ -357,12 +375,21 @@ def checkout():
     cursor.execute(total_query, (session['email'],))
     total_price = cursor.fetchone()[0]
 
+    # Retrieve shipping info from database
+    select_shipping_query = """
+    SELECT * FROM Shipping
+    INNER JOIN User ON Shipping.UserId = User.Id
+    WHERE User.Email = %s
+    """
+    cursor.execute(select_shipping_query, (session['email'],))
+    shipping_info = cursor.fetchall()
+
     # Close the cursor and connection
     cursor.close()
     cnx.close()
 
     # Render the template and pass the cart data to it
-    return render_template('checkout.html', cart_products=cart_products, total_price=total_price)
+    return render_template('checkout.html', cart_products=cart_products, total_price=total_price, shipping_info=shipping_info)
 
 
 @app.route('/place_order', methods=['POST'])
@@ -463,52 +490,75 @@ def order_confirmation(order_id):
     cursor.execute(total_query, (session['email'], order_id))
     total_price = cursor.fetchone()[0]
 
+    # Retrieve shipping info from database
+    select_shipping_query = """
+    SELECT * FROM Shipping
+    INNER JOIN User ON Shipping.UserId = User.Id
+    WHERE User.Email = %s
+    """
+    cursor.execute(select_shipping_query, (session['email'],))
+    shipping_info = cursor.fetchall()
+
     # Close the cursor and connection
     cursor.close()
     cnx.close()
 
     # Render the template and pass the order data to it
-    return render_template('order_confirmation.html', order_id=order_id, order_products=order_products, total_price=total_price)
+    return render_template('order_confirmation.html', order_id=order_id, order_products=order_products, total_price=total_price, shipping_info=shipping_info)
 
 
 # Route for adding shipping information
-@app.route('/add_shipping', methods=['POST'])
-def add_shipping():
+@app.route('/shipping', methods=['GET', 'POST'])
+def shipping():
+    # Check if the user is authenticated
     if 'email' not in session:
         return redirect(url_for('signin'))
 
-    # Retrieve form data
-    full_name = request.form.get('full_name')
-    street_address = request.form.get('street_address')
-    city = request.form.get('city')
-    state_province = request.form.get('state_province')
-    postal_code = request.form.get('postal_code')
-    country = request.form.get('country')
+    if request.method == 'POST':
+        # Retrieve shipping information from the form
+        full_name = request.form.get('full_name')
+        street_address = request.form.get('street_address')
+        city = request.form.get('city')
+        state_province = request.form.get('state_province')
+        postal_code = request.form.get('postal_code')
+        country = request.form.get('country')
 
-    # Connect to the MySQL database
-    cnx = mysql.connector.connect(**db_config)
-    cursor = cnx.cursor()
+        # Connect to the MySQL database
+        cnx = mysql.connector.connect(**db_config)
+        cursor = cnx.cursor()
 
-    # Retrieve the user's ID
-    select_user_id_query = "SELECT Id FROM User WHERE Email = %s"
-    cursor.execute(select_user_id_query, (session['email'],))
-    user_id = cursor.fetchone()[0]
+        # Retrieve the user's ID
+        select_user_query = "SELECT Id FROM User WHERE Email = %s"
+        cursor.execute(select_user_query, (session['email'],))
+        user_id = cursor.fetchone()[0]
 
-    # Insert the shipping information into the shipping table
-    insert_shipping_query = """
-    INSERT INTO Shipping (UserId, Full_Name, Street_Address, City, State_Province, Postal_Code, Country)
-    VALUES (%s, %s, %s, %s, %s, %s, %s)
-    """
-    shipping_data = (user_id, full_name, street_address, city, state_province, postal_code, country)
-    cursor.execute(insert_shipping_query, shipping_data)
-    cnx.commit()
+        # Insert the shipping information into the shipping table
+        insert_shipping_query = """
+        INSERT INTO Shipping (UserId, Full_Name, Street_Address, City, State_Province, Postal_Code, Country)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        """
+        shipping_data = (user_id, full_name, street_address, city, state_province, postal_code, country)
+        cursor.execute(insert_shipping_query, shipping_data)
+        cnx.commit()
 
-    # Close the cursor and connection
-    cursor.close()
-    cnx.close()
+         # Retrieve shipping info from database
+        select_shipping_query = """
+        SELECT * FROM Shipping
+        INNER JOIN User ON Shipping.UserId = User.Id
+        WHERE User.Email = %s
+        """
+        cursor.execute(select_shipping_query, (session['email'],))
+        shipping_info = cursor.fetchall()
 
-    # Redirect to the checkout page or any other desired location
-    return redirect(url_for('checkout'))
+        # Close the cursor and connection
+        cursor.close()
+        cnx.close()
+
+        # Redirect the user back to the cart page
+        return render_template('checkout.html', shipping_info=shipping_info)
+
+    # If it's a GET request, render the shipping information form
+    return render_template('shipping.html')
 
 
 if __name__ == '__main__':

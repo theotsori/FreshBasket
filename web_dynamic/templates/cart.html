@@ -48,7 +48,7 @@
 
     <p>Total Price: Ksh {{ total_price }}</p>
 
-    <form action="{{ url_for('checkout') }}" method="POST">
+    <form action="{{ url_for('shipping') }}" method="GET">
         <button type="submit">Proceed to Checkout</button>
     </form>
     <footer>

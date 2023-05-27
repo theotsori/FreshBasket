@@ -10,31 +10,32 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/shipping.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/header.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
+    <script src="{{ url_for('static', filename='scripts/shipping.js') }}"></script>
     <title>Add Shipping Information</title>
 </head>
 <body>
-    <h1 class="form-heading">Add Shipping Information</h1>
-    <form class="add-shipping-form" action="/add_shipping" method="POST">
-        <label for="full_name">Full Name:</label>
-        <input type="text" id="full_name" name="full_name" required>
+  <h1 class="form-heading">Add Shipping Information</h1>
+  <form class="add-shipping-form" action="/shipping" method="POST" id="shipping-form">
+    <label for="full_name">Full Name:</label>
+    <input type="text" id="full_name" name="full_name" required>
 
-        <label for="street_address">Street Address:</label>
-        <input type="text" id="street_address" name="street_address" required>
+    <label for="street_address">Street Address:</label>
+    <input type="text" id="street_address" name="street_address" required>
 
-        <label for="city">City:</label>
-        <input type="text" id="city" name="city" required>
+    <label for="city">City:</label>
+    <input type="text" id="city" name="city" required>
 
-        <label for="state_province">State/Province:</label>
-        <input type="text" id="state_province" name="state_province" required>
+    <label for="state_province">State/Province:</label>
+    <input type="text" id="state_province" name="state_province" required>
 
-        <label for="postal_code">Postal Code:</label>
-        <input type="text" id="postal_code" name="postal_code" required>
+    <label for="postal_code">Postal Code:</label>
+    <input type="text" id="postal_code" name="postal_code" required>
 
-        <label for="country">Country:</label>
-        <input type="text" id="country" name="country" required>
+    <label for="country">Country:</label>
+    <input type="text" id="country" name="country" required>
 
-        <input class="submit-button" type="submit" value="Submit">
-    </form>
+    <input class="submit-button" type="submit" value="Submit">
+  </form>
     <footer>
         <div class="container">
           <div class="footer-logo">

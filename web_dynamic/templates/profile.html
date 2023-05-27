@@ -53,8 +53,8 @@
         <h2>Welcome, {{ user[1] }}!</h2>
         <p>Email: {{ user[2] }}</p>
         <p>Phone: {{ user[4] }}</p>
-        <h2>Shipping Information</h2>
-        {% for ship in shipping %}
+        {% for ship in shipping_info %}
+          <h2>Shipping Information</h2>
           <p>Full Name: {{ ship[2] }}</p>
           <p>Street Address: {{ ship[3] }}</p>
           <p>City: {{ ship[4] }}</p>
