@@ -1,7 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Order Confirmation</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/confirm.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/header.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
+    <title>FRB: Order Confirmation</title>
 </head>
 <body>
     <h1>Order Confirmation</h1>
@@ -21,13 +30,22 @@
             <tr>
                 <td>{{ product[1] }}</td>
                 <td>{{ product[2] }}</td>
-                <td>{{ product[3] }}</td>
-                <td><img src="{{ product[4] }}" alt="Product Image" width="100"></td>
+                <td>Ksh {{ product[3] }}</td>
+                <td><img src="{{ url_for('static', filename=product[4]) }}" alt="{{ product[1] }}" width="100"></td>
                 <td>{{ product[5] }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <p>Total Price: {{ total_price }}</p>
+    <p>Total Price: Ksh {{ total_price }}</p>
+    <h2>Shipping Information</h2>
+        {% for ship in shipping %}
+          <p>Full Name: {{ ship[2] }}</p>
+          <p>Street Address: {{ ship[3] }}</p>
+          <p>City: {{ ship[4] }}</p>
+          <p>State/Province: {{ ship[5] }}</p>
+          <p>Postal Code: {{ ship[6] }}</p>
+          <p>Country: {{ ship[7] }}</p>
+        {% endfor %}
 </body>
 </html>

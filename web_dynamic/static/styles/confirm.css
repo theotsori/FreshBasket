@@ -1,0 +1,62 @@
+/* Reset default browser styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Body styles */
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.4;
+    background-color: #f5f5f5;
+    color: #333;
+    padding: 20px;
+  }
+  
+  /* Heading styles */
+  h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  /* Table styles */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+  }
+  
+  table th,
+  table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  table th {
+    font-weight: bold;
+  }
+  
+  table tbody tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  /* Image styles */
+  table img {
+    max-width: 100px;
+    height: auto;
+  }
+  
+  /* Total price styles */
+  p {
+    font-weight: bold;
+    margin-top: 20px;
+  }

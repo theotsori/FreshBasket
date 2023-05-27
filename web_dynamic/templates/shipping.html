@@ -7,49 +7,33 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/cart.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/shipping.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/header.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/footer.css') }}">
-    <title>Fresh Basket: Cart</title>
+    <title>Add Shipping Information</title>
 </head>
 <body>
-    <h1>Cart</h1>
+    <h1 class="form-heading">Add Shipping Information</h1>
+    <form class="add-shipping-form" action="/add_shipping" method="POST">
+        <label for="full_name">Full Name:</label>
+        <input type="text" id="full_name" name="full_name" required>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Image</th>
-                <th>Category</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in cart_products %}
-            <tr>
-                <td>{{ product[0] }}</td>
-                <td><b>{{ product[1] }}</b></td>
-                <td>{{ product[2] }}</td>
-                <td>Ksh {{ product[3] }}</td>
-                <td><img src="{{ url_for('static', filename=product[4]) }}" alt="{{ product[4] }}"></td>
-                <td>{{ product[5] }}</td>
-                <td>
-                    <form action="{{ url_for('remove_from_cart') }}" method="POST">
-                        <input type="hidden" name="product_id" value="{{ product[0] }}">
-                        <button type="submit">Remove</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <label for="street_address">Street Address:</label>
+        <input type="text" id="street_address" name="street_address" required>
 
-    <p>Total Price: Ksh {{ total_price }}</p>
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required>
 
-    <form action="{{ url_for('checkout') }}" method="POST">
-        <button type="submit">Proceed to Checkout</button>
+        <label for="state_province">State/Province:</label>
+        <input type="text" id="state_province" name="state_province" required>
+
+        <label for="postal_code">Postal Code:</label>
+        <input type="text" id="postal_code" name="postal_code" required>
+
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" required>
+
+        <input class="submit-button" type="submit" value="Submit">
     </form>
     <footer>
         <div class="container">

@@ -471,5 +471,45 @@ def order_confirmation(order_id):
     return render_template('order_confirmation.html', order_id=order_id, order_products=order_products, total_price=total_price)
 
 
+# Route for adding shipping information
+@app.route('/add_shipping', methods=['POST'])
+def add_shipping():
+    if 'email' not in session:
+        return redirect(url_for('signin'))
+
+    # Retrieve form data
+    full_name = request.form.get('full_name')
+    street_address = request.form.get('street_address')
+    city = request.form.get('city')
+    state_province = request.form.get('state_province')
+    postal_code = request.form.get('postal_code')
+    country = request.form.get('country')
+
+    # Connect to the MySQL database
+    cnx = mysql.connector.connect(**db_config)
+    cursor = cnx.cursor()
+
+    # Retrieve the user's ID
+    select_user_id_query = "SELECT Id FROM User WHERE Email = %s"
+    cursor.execute(select_user_id_query, (session['email'],))
+    user_id = cursor.fetchone()[0]
+
+    # Insert the shipping information into the shipping table
+    insert_shipping_query = """
+    INSERT INTO Shipping (UserId, Full_Name, Street_Address, City, State_Province, Postal_Code, Country)
+    VALUES (%s, %s, %s, %s, %s, %s, %s)
+    """
+    shipping_data = (user_id, full_name, street_address, city, state_province, postal_code, country)
+    cursor.execute(insert_shipping_query, shipping_data)
+    cnx.commit()
+
+    # Close the cursor and connection
+    cursor.close()
+    cnx.close()
+
+    # Redirect to the checkout page or any other desired location
+    return redirect(url_for('checkout'))
+
+
 if __name__ == '__main__':
     app.run(debug=True)

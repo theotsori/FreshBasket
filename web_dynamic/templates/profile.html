@@ -53,6 +53,15 @@
         <h2>Welcome, {{ user[1] }}!</h2>
         <p>Email: {{ user[2] }}</p>
         <p>Phone: {{ user[4] }}</p>
+        <h2>Shipping Information</h2>
+        {% for ship in shipping %}
+          <p>Full Name: {{ ship[2] }}</p>
+          <p>Street Address: {{ ship[3] }}</p>
+          <p>City: {{ ship[4] }}</p>
+          <p>State/Province: {{ ship[5] }}</p>
+          <p>Postal Code: {{ ship[6] }}</p>
+          <p>Country: {{ ship[7] }}</p>
+        {% endfor %}
     </div>
     <footer>
       <div class="container">
