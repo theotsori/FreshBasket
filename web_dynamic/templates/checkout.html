@@ -38,17 +38,29 @@
             {% endfor %}
         </tbody>
     </table>
-    {% for ship in shipping_info %}
-      <h2>Shipping Information</h2>
-      <p>Full Name: {{ ship[2] }}</p>
-      <p>Street Address: {{ ship[3] }}</p>
-      <p>City: {{ ship[4] }}</p>
-      <p>State/Province: {{ ship[5] }}</p>
-      <p>Postal Code: {{ ship[6] }}</p>
-      <p>Country: {{ ship[7] }}</p>
-    {% endfor %}
+    <h2>Shipping Information</h2>
+    <table>
+        <tr>
+            <th>Full Name</th>
+            <th>Street Address</th>
+            <th>City</th>
+            <th>State/Province</th>
+            <th>Postal Code</th>
+            <th>Country</th>
+        </tr>
+        {% for ship in shipping_info %}
+        <tr>
+            <td>{{ ship[2] }}</td>
+            <td>{{ ship[3] }}</td>
+            <td>{{ ship[4] }}</td>
+            <td>{{ ship[5] }}</td>
+            <td>{{ ship[6] }}</td>
+            <td>{{ ship[7] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
     <p>Total Price: Ksh {{ total_price }}</p>
-    <form action="{{ url_for('place_order') }}" method="POST">
+    <form class="total-price" action="{{ url_for('place_order') }}" method="POST">
         <button type="submit">Place Order</button>
     </form>
     <footer>
