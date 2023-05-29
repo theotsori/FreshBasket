@@ -12,41 +12,43 @@
     <title>FRB: Profile</title>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-          <div class="logo">
-            <a href="#"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo"></a>
-          </div>
-          <div class="menu-toggle">
-            <i class="material-icons">menu</i>
-          </div>
-          <nav class="show-menu">
-            <ul>
-              <li><a href="{{ url_for('home') }}">Home</a></li>
-              <li><a href="{{ url_for('products') }}">Shop</a></li>
-              <li><a href="{{ url_for('recipe') }}">Recipes</a></li>
-              <li><a href="#">Videos</a></li>
-              <li>
-                <form action="/search" method="GET">
-                  <input type="search" name="query" placeholder="Search the grocery shop...">
-                  <button type="submit"><i class="material-icons">search</i></button>
-                </form>
-              </li>
-            </ul>
-          </nav>
-          <div class="user">
-            <div class="profile">
-              <a href="{{ url_for('profile') }}"><i class="material-icons icon-large">account_circle</i></a>
-            </div>
-            <div class="sign-in" class="material-icons">
-              <a href="{{ url_for('signout') }}">Sign Out</a>
-            </div>
-            <div class="cart">
-              <a href="#"><i class="material-icons">shopping_cart</i><span>0</span></a>
-            </div>
-          </div>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <a href="#"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo"></a>
+      </div>
+      <div class="menu-toggle">
+        <i class="material-icons">menu</i>
+      </div>
+      <nav class="show-menu">
+        <ul>
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="{{ url_for('products') }}">Shop</a></li>
+          <li><a href="{{ url_for('recipe') }}">Recipes</a></li>
+          <li><a href="{{ url_for('videos') }}">Videos</a></li>
+          <li>
+            <form action="/search" method="GET">
+              <input type="search" name="query" placeholder="Search the grocery shop...">
+              <button type="submit"><i class="material-icons">search</i></button>
+            </form>
+          </li>
+        </ul>
+      </nav>
+      <div class="user">
+        <div class="profile">
+          <a href="{{ url_for('profile') }}"><i class="material-icons icon-large">account_circle</i></a>
         </div>
-    </header>
+        <div class="cart">
+          <a href="{{ url_for('cart') }}">
+            <i class="material-icons">shopping_cart</i>
+            {% if cart_count > 0 %}
+            <span id="cart-count">{{ cart_count }}</span>
+            {% endif %}
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
     <h1>Profile</h1>
     <div class="profile-container">
         <span class="material-icons icon-large">account_circle</span>

@@ -3,6 +3,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for, jsonify
 import mysql.connector
 import bcrypt
+import requests
 
 app = Flask(__name__)
 app.secret_key = 'my_secret_key'
@@ -22,7 +23,9 @@ db_config = {
 def home():
     # Check if the user is authenticated
     if 'email' in session:
-        return render_template('index.html')
+        # checks items on the cart
+        cart_count = get_cart_count()
+        return render_template('index.html', cart_count=cart_count)
     else:
         return redirect(url_for('signin'))
 
@@ -30,7 +33,9 @@ def home():
 # Route for recipe
 @app.route('/recipe')
 def recipe():
-    return render_template('recipe.html')
+    # checks items on the cart
+    cart_count = get_cart_count()
+    return render_template('recipe.html', cart_count=cart_count)
 
 
 # Route for the product page
@@ -49,7 +54,35 @@ def products():
     cnx.close()
 
     # Render the template and pass the product data to it
-    return render_template('shop.html', products=products)
+    cart_count = get_cart_count()
+    return render_template('shop.html', products=products, cart_count=cart_count)
+
+
+def get_cart_count():
+    # Check if the user is authenticated
+    if 'email' in session:
+        # Connect to the MySQL database
+        cnx = mysql.connector.connect(**db_config)
+        cursor = cnx.cursor()
+
+        # Retrieve the cart count for the user
+        select_query = """
+        SELECT COUNT(CP.ProductId)
+        FROM CartProduct CP
+        JOIN Cart C ON CP.CartId = C.Id
+        JOIN User U ON C.UserId = U.Id
+        WHERE U.Email = %s
+        """
+        cursor.execute(select_query, (session['email'],))
+        cart_count = cursor.fetchone()[0]
+
+        # Close the cursor and connection
+        cursor.close()
+        cnx.close()
+
+        return cart_count
+
+    pass
 
 
 # Route for sign up
@@ -167,8 +200,11 @@ def profile():
         cursor.close()
         cnx.close()
 
+        # checks items on the cart
+        cart_count = get_cart_count()
+
         # Render the template and pass the user data to it
-        return render_template('profile.html', user=user, shipping_info=shipping_info)
+        return render_template('profile.html', user=user, shipping_info=shipping_info, cart_count=cart_count)
     else:
         return redirect(url_for('signin'))
 
@@ -207,8 +243,11 @@ def search():
     cursor.close()
     cnx.close()
 
+    # checks items on the cart
+    cart_count = get_cart_count()
+
     # Render the template and pass the product data to it
-    return render_template('search_results.html', products=products, query=query)
+    return render_template('search_results.html', products=products, query=query, cart_count=cart_count)
 
 
 # Route for cart
@@ -304,7 +343,7 @@ def add_to_cart():
     cnx.close()
 
     # Redirect back to the products page
-    return redirect(url_for('products'))
+    return jsonify({'status': 'success'})
 
 
 # Route for removing a product from the cart
@@ -503,8 +542,16 @@ def order_confirmation(order_id):
     cursor.close()
     cnx.close()
 
+    # checks items on the cart
+    cart_count = get_cart_count()
+
     # Render the template and pass the order data to it
-    return render_template('order_confirmation.html', order_id=order_id, order_products=order_products, total_price=total_price, shipping_info=shipping_info)
+    return render_template('order_confirmation.html',
+                           order_id=order_id,
+                           order_products=order_products,
+                           total_price=total_price,
+                           shipping_info=shipping_info,
+                           cart_count=cart_count)
 
 
 # Route for adding shipping information
@@ -597,6 +644,36 @@ def shipping():
     cnx.close()
 
     return render_template('shipping.html', shipping_info=shipping_info)
+
+
+@app.route('/videos')
+def videos():
+    # Configure your YouTube API key and channel ID
+    api_key = 'AIzaSyBNIhR7lu4wVxYmzHJYcruvrfeO6z9k_ME'
+
+    # Define the search query for cooking videos
+    search_query = 'African meals'
+
+    # Make a request to the YouTube API
+    url = f'https://www.googleapis.com/youtube/v3/search?key={api_key}&part=snippet&type=video&q={search_query}'
+    response = requests.get(url)
+    data = response.json()
+
+    # Extract the video information from the API response
+    videos = []
+    for item in data['items']:
+        video_id = item['id']['videoId']
+        video_title = item['snippet']['title']
+        video_thumbnail = item['snippet']['thumbnails']['medium']['url']
+        videos.append({'id': video_id, 'title': video_title, 'thumbnail': video_thumbnail})
+
+    # Limit the number of videos to a maximum of 10
+    videos = videos[:10]
+
+    cart_count = get_cart_count()
+    
+    # Render the template and pass the videos to it
+    return render_template('videos.html', videos=videos, cart_count=cart_count)
 
 
 if __name__ == '__main__':

@@ -31,3 +31,38 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+// add to cart function
+function addToCart(productId) {
+    // Create an XMLHttpRequest object
+    var xhr = new XMLHttpRequest();
+  
+    // Prepare the request URL
+    var url = '/add_to_cart';
+  
+    // Prepare the request parameters
+    var params = 'product_id=' + encodeURIComponent(productId);
+  
+    // Set up the request
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  
+    // Define the callback function
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        // Success: Update the cart dynamically
+        var cartCount = document.getElementById('cart-count');
+        var currentCount = parseInt(cartCount.innerText);
+        cartCount.innerText = currentCount + 1;
+
+        // Display success message
+
+      } else {
+        // Error: Display an error message
+        alert('Error adding item to cart.');
+      }
+    };
+  
+    // Send the request
+    xhr.send(params);
+  }

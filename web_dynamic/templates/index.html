@@ -15,38 +15,43 @@
     <title>Fresh Basket</title>
 </head>
 <body>
-    <header class="header">
-      <div class="container">
-        <div class="logo">
-          <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo"></a>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <a href="#"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo"></a>
+      </div>
+      <div class="menu-toggle">
+        <i class="material-icons">menu</i>
+      </div>
+      <nav class="show-menu">
+        <ul>
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="{{ url_for('products') }}">Shop</a></li>
+          <li><a href="{{ url_for('recipe') }}">Recipes</a></li>
+          <li><a href="{{ url_for('videos') }}">Videos</a></li>
+          <li>
+            <form action="/search" method="GET">
+              <input type="search" name="query" placeholder="Search the grocery shop...">
+              <button type="submit"><i class="material-icons">search</i></button>
+            </form>
+          </li>
+        </ul>
+      </nav>
+      <div class="user">
+        <div class="profile">
+          <a href="{{ url_for('profile') }}"><i class="material-icons icon-large">account_circle</i></a>
         </div>
-        <div class="menu-toggle">
-          <i class="material-icons">menu</i>
-        </div>
-        <nav class="show-menu">
-          <ul>
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('products') }}">Shop</a></li>
-            <li><a href="{{ url_for('recipe') }}">Recipes</a></li>
-            <li><a href="#">Videos</a></li>
-            <li>
-              <form action="/search" method="GET">
-                <input type="search" name="query" placeholder="Search the grocery shop...">
-                <button type="submit"><i class="material-icons">search</i></button>
-              </form>
-            </li>
-          </ul>
-        </nav>
-        <div class="user">
-          <div class="profile">
-            <a href="{{ url_for('profile') }}"><i class="material-icons icon-large">account_circle</i></a>
-          </div>
-          <div class="cart">
-            <a href="#"><i class="material-icons">shopping_cart</i><span>0</span></a>
-          </div>
+        <div class="cart">
+          <a href="{{ url_for('cart') }}">
+            <i class="material-icons">shopping_cart</i>
+            {% if cart_count > 0 %}
+            <span id="cart-count">{{ cart_count }}</span>
+            {% endif %}
+          </a>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
     <section>
       <div class="slideshow-container">
         <img class="slides" src="{{ url_for('static', filename='images/banner1.jpg') }}">
@@ -71,7 +76,7 @@
         <p>Shop online and pay when your groceries arrive. Convenient and secure payment option.</p>
       </div>
     </section>
-    <div class="divider">Karibu Tena</div>
+    <div class="divider">Karibu Fresh Basket</div>
     <footer>
       <div class="container">
         <div class="footer-logo">
