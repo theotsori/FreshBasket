@@ -4,16 +4,22 @@ from flask import Flask, render_template, request, session, redirect, url_for, j
 import mysql.connector
 import bcrypt
 import requests
+import os
 
 app = Flask(__name__)
-app.secret_key = 'my_secret_key'
+app.secret_key = os.environ.get('APP_SECRET_KEY')
+
+db_host = os.environ.get('DB_HOST')
+db_user = os.environ.get('DB_USER')
+db_password = os.environ.get('DB_PASSWORD')
+db_database = os.environ.get('DB_DATABASE')
 
 # Configure MySQL connection
 db_config = {
-    'host': 'localhost',
-    'user': 'fresh_dev_db',
-    'password': 'fresh_dev_pwd',
-    'database': 'fresh_basket'
+    'host': db_host,
+    'user': db_user,
+    'password': db_password,
+    'database': db_database
 }
 
 
@@ -649,7 +655,7 @@ def shipping():
 @app.route('/videos')
 def videos():
     # Configure your YouTube API key and channel ID
-    api_key = 'AIzaSyBNIhR7lu4wVxYmzHJYcruvrfeO6z9k_ME'
+    api_key = os.environ.get('YT_API_KEY')
 
     # Define the search query for cooking videos
     search_query = 'African meals'
