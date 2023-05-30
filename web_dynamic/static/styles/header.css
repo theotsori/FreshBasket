@@ -1,8 +1,10 @@
 /* Header styling for frb */
 .header {
-  background-color: #fff;
+  background-color: #f9f9f9;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
-  position: fixed;
+  color: #fff;
+  padding: 10px 0;
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;
@@ -13,13 +15,20 @@ header .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0 20px;
 }
 
 .logo img {
   max-height: 40px;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
 }
 
 nav ul {
@@ -79,143 +88,62 @@ nav button[type="submit"]:hover {
 
 .user {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
 }
 
-.sign-in {
-  margin-right: 20px;
+.user .profile,
+.user .cart {
+  margin-left: 20px;
 }
 
-.sign-in a {
+.user .profile a,
+.user .cart a {
   color: #333;
   text-decoration: none;
-  font-size: 16px;
-  font-weight: bold;
-  transition: color 0.3s ease-in-out;
-  background-color: 0.3s ease-in-out;
-  padding: 8px 16px;
-  border-radius: 5px;
-  border: none;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
 }
 
-.sign-in a:hover {
-  background-color: #333;
-  color: #fff;
+.user .profile a:hover,
+.user .cart a:hover {
+  color: #f44336;
 }
 
-.cart {
-  position: relative;
+.user .profile i,
+.user .cart i {
+  font-size: 24px;
+  margin-right: 5px;
 }
 
-.cart span {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  background-color: #f00;
+#cart-count {
+  background-color: #f44336;
   color: #fff;
   font-size: 12px;
-  padding: 2px 5px;
+  padding: 2px 6px;
   border-radius: 50%;
 }
 
-.cart a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #333;
-  text-decoration: none;
-  font-size: 40px;
-  transition: color 0.3s ease-in-out;
-  margin-right: 20px;
-}
-
-.cart a:hover {
-  color: #f00;
-}
-
-.profile {
-  position: relative;
-}
-
-.profile a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #333;
-  text-decoration: none;
-  /*font-size: 32px;*/
-  transition: color 0.3s ease-in-out;
-  margin-right: 20px;
-}
-
-.profile .icon-large {
-  font-size: 40px;
-}
-
-.profile a:hover {
-  color: orange;
-}
-
-.menu-toggle {
-  display: none;
-  cursor: pointer;
-}
-
-/* Media query for small screens */
-@media only screen and (max-width: 600px) {
-  .header {
-    padding: 10px;
-  }
-  
-  header .container {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  nav {
-    margin-top: 10px;
+/* Media Query for Mobile */
+@media (max-width: 768px) {
+  .menu-toggle {
+      display: block;
   }
   
   nav ul {
-    justify-content: space-between;
-    flex-wrap: wrap;
+      display: none;
+      flex-direction: column;
   }
   
-  nav li {
-    margin: 5px;
+  nav ul li {
+      margin: 10px 0;
   }
   
-  .menu-toggle {
-    display: block;
+  .show-menu ul {
+      display: flex;
   }
   
-  .menu-toggle:before {
-    content: "\2630";
-    font-size: 24px;
-  }
-  
-  nav {
-    display: none;
-  }
-  
-  nav.active {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-  }
-  
-  nav.active li {
-    margin: 10px;
-  }
-  
-  nav.active li:first-child {
-    margin-top: 20px;
-  }
-  
-  nav input[type="search"] {
-    margin-right: 0;
-    margin-bottom: 10px;
+  .show-menu ul li {
+      margin-right: 0;
   }
 }

@@ -7,9 +7,8 @@
 
 /* Body styles */
 body {
-  font-family: Arial, sans-serif;
   line-height: 1.4;
-  background-color: #f5f5f5;
+  background-color: #fff;
   color: #333;
   padding: 20px;
 }
@@ -26,7 +25,6 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  background-color: #fff;
 }
 
 table th,
@@ -38,6 +36,7 @@ table td {
 
 table th {
   font-weight: bold;
+  background-color: #f2f2f2;
 }
 
 table tbody tr:hover {
@@ -46,31 +45,48 @@ table tbody tr:hover {
 
 /* Image styles */
 table img {
-  max-width: 80px;
-  height: auto;
+  max-width: 100px;
+  max-height: 100px;
 }
 
 /* Total price styles */
-p {
+p.total-price {
   font-weight: bold;
   margin-top: 20px;
 }
 
 /* Checkout button styles */
-form:last-child {
-  text-align: right;
-  margin-top: 20px;
-}
-
 button[type="submit"] {
-  background-color: #007bff;
+  background-color: #4caf50;
   color: #fff;
   border: none;
-  padding: 12px 20px;
+  padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
 }
 
 button[type="submit"]:hover {
-  background-color: #0069d9;
+  background-color: #45a049;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.buttons form {
+  flex: 1;
+}
+
+.buttons form:not(:last-child) {
+  margin-right: 10px;
+}
+
+.buttons form:last-child {
+  margin-left: 10px;
+}
+
+.buttons button[type="submit"] {
+  width: 100%;
 }

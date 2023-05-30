@@ -13,103 +13,108 @@
     <title>Fresh Basket: Checkout</title>
 </head>
 <body>
-    <h1>Checkout</h1>
-    <table>
+  <div class="body-container">
+    <h1>Payment Checkout</h1>
+    <div class="payment-container">
+      <h2>Payment</h2>
+      <div class="payment-img"></div>
+      <p><b>Total Price: Ksh {{ total_price }}</b></p>
+    </div>
+    <div class="ship-container">
+      {% for ship in shipping_info %}
+      <h2>Shipping Information</h2>
+      <p>Full Name: {{ ship[2] }}</p>
+      <p>Street Address: {{ ship[3] }}</p>
+      <p>City: {{ ship[4] }}</p>
+      <p>State/Province: {{ ship[5] }}</p>
+      <p>Postal Code: {{ ship[6] }}</p>
+      <p>Country: {{ ship[7] }}</p>
+      {% endfor %}
+    </div>
+    <div class="content-container">
+      <h2>Order Items</h2>
+      <table>
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Image</th>
-                <th>Category</th>
-            </tr>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Category</th>
+          </tr>
         </thead>
         <tbody>
-            {% for product in cart_products %}
-            <tr>
-                <td>{{ product[0] }}</td>
-                <td><b>{{ product[1] }}</b></td>
-                <td>{{ product[2] }}</td>
-                <td>Ksh {{ product[3] }}</td>
-                <td><img src="{{ url_for('static', filename=product[4]) }}" alt="{{ product[1] }}"></td>
-                <td>{{ product[5] }}</td>
-            </tr>
-            {% endfor %}
+          {% for product in cart_products %}
+          <tr>
+            <td>{{ product[0] }}</td>
+            <td><b>{{ product[1] }}</b></td>
+            <td>{{ product[2] }}</td>
+            <td>Ksh {{ product[3] }}</td>
+            <td><img src="{{ url_for('static', filename=product[4]) }}" alt="{{ product[1] }}"></td>
+            <td>{{ product[5] }}</td>
+          </tr>
+          {% endfor %}
         </tbody>
-    </table>
-    <h2>Shipping Information</h2>
-    <table>
-        <tr>
-            <th>Full Name</th>
-            <th>Street Address</th>
-            <th>City</th>
-            <th>State/Province</th>
-            <th>Postal Code</th>
-            <th>Country</th>
-        </tr>
-        {% for ship in shipping_info %}
-        <tr>
-            <td>{{ ship[2] }}</td>
-            <td>{{ ship[3] }}</td>
-            <td>{{ ship[4] }}</td>
-            <td>{{ ship[5] }}</td>
-            <td>{{ ship[6] }}</td>
-            <td>{{ ship[7] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <p>Total Price: Ksh {{ total_price }}</p>
-    <form class="total-price" action="{{ url_for('place_order') }}" method="POST">
+      </table>
+      <p>Total Price: Ksh {{ total_price }}</p>
+    </div>
+    <div class="buttons-container">
+      <form class="total-price" action="{{ url_for('place_order') }}" method="POST">
         <button type="submit">Place Order</button>
-    </form>
-    <footer>
-        <div class="container">
-          <div class="footer-logo">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Fresh Basket Logo">
-          </div>
-          <div class="footer-columns">
-            <div class="footer-column">
-              <h3>Fresh Basket</h3>
-              <ul>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact Us</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms & Conditions</a></li>
-              </ul>
-            </div>
-            <div class="footer-column">
-              <h3>Categories</h3>
-              <ul>
-                <li><a href="#">Fresh Produce</a></li>
-                <li><a href="#">Meat & Poultry</a></li>
-                <li><a href="#">Beverages</a></li>
-                <li><a href="#">Bakery & Bread </a></li>
-              </ul>
-            </div>
-            <div class="footer-column">
-              <h3>Follow Us</h3>
-              <ul class="social-media-icons">
-                <li><a href="https://web.facebook.com/profile.php?id=100089080427306"><img src="{{ url_for('static', filename='images/facebook1.svg') }}" alt="facebook"></a></li>
-                  <li><a href="https://twitter.com/Theotsori"><img src="{{ url_for('static', filename='images/twitter1.svg') }}" alt="twitter"></a></li>
-                  <li><a href="https://github.com/theotsori"><img src="{{ url_for('static', filename='images/github1.svg') }}" alt="github"></a></li>
-                  <li><a href="https://wa.me/message/XPS4G47REHWYD1"><img src="{{ url_for('static', filename='images/whatsapp1.svg') }}" alt="whatsapp"></a></li>
-              </ul>
-            </div>
-            <div class="footer-column">
-                <h3>The Team</h3>
-                <ul class="social-media-icons">
-                  <li><a href="https://web.facebook.com/profile.php?id=100089080427306"><img src="{{ url_for('static', filename='images/facebook.svg') }}" alt="facebook"></a></li>
-                  <li><a href="https://twitter.com/Theotsori"><img src="{{ url_for('static', filename='images/twitter.svg') }}" alt="twitter"></a></li>
-                  <li><a href="https://github.com/theotsori"><img src="{{ url_for('static', filename='images/github.svg') }}" alt="github"></a></li>
-                  <li><a href="https://wa.me/message/XPS4G47REHWYD1"><img src="{{ url_for('static', filename='images/whatsapp.svg') }}" alt="whatsapp"></a></li>
-                </ul>
-            </div>
-          </div>
-          <div class="footer-bottom">
-            <p>© 2023 Fresh Basket. All Rights Reserved.</p>
-          </div>
+      </form>
+      <form action="{{ url_for('products') }}">
+        <button type="submit">Continue Shopping</button>
+      </form>
+    </div>
+  </div>
+  <footer>
+    <div class="container">
+      <div class="footer-logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Fresh Basket Logo">
+      </div>
+      <div class="footer-columns">
+        <div class="footer-column">
+          <h3>Fresh Basket</h3>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+          </ul>
         </div>
-    </footer>
+        <div class="footer-column">
+          <h3>Categories</h3>
+          <ul>
+            <li><a href="#">Fresh Produce</a></li>
+            <li><a href="#">Meat & Poultry</a></li>
+            <li><a href="#">Beverages</a></li>
+            <li><a href="#">Bakery & Bread </a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Follow Us</h3>
+          <ul class="social-media-icons">
+            <li><a href="https://web.facebook.com/profile.php?id=100089080427306"><img src="{{ url_for('static', filename='images/facebook1.svg') }}" alt="facebook"></a></li>
+            <li><a href="https://twitter.com/Theotsori"><img src="{{ url_for('static', filename='images/twitter1.svg') }}" alt="twitter"></a></li>
+            <li><a href="https://github.com/theotsori"><img src="{{ url_for('static', filename='images/github1.svg') }}" alt="github"></a></li>
+            <li><a href="https://wa.me/message/XPS4G47REHWYD1"><img src="{{ url_for('static', filename='images/whatsapp1.svg') }}" alt="whatsapp"></a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>The Team</h3>
+          <ul class="social-media-icons">
+            <li><a href="https://web.facebook.com/profile.php?id=100089080427306"><img src="{{ url_for('static', filename='images/facebook.svg') }}" alt="facebook"></a></li>
+            <li><a href="https://twitter.com/Theotsori"><img src="{{ url_for('static', filename='images/twitter.svg') }}" alt="twitter"></a></li>
+            <li><a href="https://github.com/theotsori"><img src="{{ url_for('static', filename='images/github.svg') }}" alt="github"></a></li>
+            <li><a href="https://wa.me/message/XPS4G47REHWYD1"><img src="{{ url_for('static', filename='images/whatsapp.svg') }}" alt="whatsapp"></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2023 Fresh Basket. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

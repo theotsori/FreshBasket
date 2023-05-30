@@ -24,6 +24,7 @@
                 <th>Price</th>
                 <th>Image</th>
                 <th>Category</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -46,14 +47,16 @@
         </tbody>
     </table>
 
-    <p>Total Price: Ksh {{ total_price }}</p>
+    <p class="total-price">Total Price: Ksh {{ total_price }}</p>
 
-    <form action="{{ url_for('shipping') }}" method="GET">
-        <button type="submit">Proceed to Checkout</button>
-    </form>
-    <form action="{{ url_for('products') }}">
-      <button type="submit">Continue Shopping</button>
-    </form>
+    <div class="buttons">
+        <form action="{{ url_for('shipping') }}" method="GET">
+            <button type="submit">Proceed to Checkout</button>
+        </form>
+        <form action="{{ url_for('products') }}">
+            <button type="submit">Continue Shopping</button>
+        </form>
+    </div>
     <footer>
         <div class="container">
           <div class="footer-logo">

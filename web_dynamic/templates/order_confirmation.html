@@ -13,92 +13,131 @@
     <title>FRB: Order Confirmation</title>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-          <div class="logo">
-            <a href="#"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo"></a>
-          </div>
-          <div class="menu-toggle">
-            <i class="material-icons">menu</i>
-          </div>
-          <nav class="show-menu">
-            <ul>
-              <li><a href="{{ url_for('home') }}">Home</a></li>
-              <li><a href="{{ url_for('products') }}">Shop</a></li>
-              <li><a href="{{ url_for('recipe') }}">Recipes</a></li>
-              <li><a href="{{ url_for('videos') }}">Videos</a></li>
-              <li>
-                <form action="/search" method="GET">
-                  <input type="search" name="query" placeholder="Search the grocery shop...">
-                  <button type="submit"><i class="material-icons">search</i></button>
-                </form>
-              </li>
-            </ul>
-          </nav>
-          <div class="user">
-            <div class="profile">
-              <a href="{{ url_for('profile') }}"><i class="material-icons icon-large">account_circle</i></a>
-            </div>
-            <div class="cart">
-              <a href="{{ url_for('cart') }}">
-                <i class="material-icons">shopping_cart</i>
-                {% if cart_count > 0 %}
-                <span id="cart-count">{{ cart_count }}</span>
-                {% endif %}
-              </a>
-            </div>
-          </div>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <a href="#"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo"></a>
+      </div>
+      <div class="menu-toggle">
+        <i class="material-icons">menu</i>
+      </div>
+      <nav class="show-menu">
+        <ul>
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="{{ url_for('products') }}">Shop</a></li>
+          <li><a href="{{ url_for('recipe') }}">Recipes</a></li>
+          <li><a href="{{ url_for('videos') }}">Videos</a></li>
+          <li>
+            <form action="/search" method="GET">
+              <input type="search" name="query" placeholder="Search the grocery shop...">
+              <button type="submit"><i class="material-icons">search</i></button>
+            </form>
+          </li>
+        </ul>
+      </nav>
+      <div class="user">
+        <div class="profile">
+          <a href="{{ url_for('profile') }}"><i class="material-icons icon-large">account_circle</i>Account</a>
         </div>
-    </header>
-    <h1>Order Confirmation</h1>
+        <div class="cart">
+          <a href="{{ url_for('cart') }}">
+            <i class="material-icons">shopping_cart</i>
+            {% if cart_count > 0 %}
+            <span id="cart-count">{{ cart_count }}</span>
+            {% endif %}
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <h1>Thank You For Shopping Order Confirmed</h1>
+  <div class="order-items">
     <h2>Order ID: {{ order_id }}</h2>
     <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Image</th>
-                <th>Category</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in order_products %}
-            <tr>
-                <td>{{ product[1] }}</td>
-                <td>{{ product[2] }}</td>
-                <td>Ksh {{ product[3] }}</td>
-                <td><img src="{{ url_for('static', filename=product[4]) }}" alt="{{ product[1] }}" width="100"></td>
-                <td>{{ product[5] }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <h2>Shipping Information</h2>
-    <table>
+      <thead>
         <tr>
-            <th>Full Name</th>
-            <th>Street Address</th>
-            <th>City</th>
-            <th>State/Province</th>
-            <th>Postal Code</th>
-            <th>Country</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Image</th>
+          <th>Category</th>
         </tr>
-        {% for ship in shipping_info %}
+      </thead>
+      <tbody>
+        {% for product in order_products %}
         <tr>
-            <td>{{ ship[2] }}</td>
-            <td>{{ ship[3] }}</td>
-            <td>{{ ship[4] }}</td>
-            <td>{{ ship[5] }}</td>
-            <td>{{ ship[6] }}</td>
-            <td>{{ ship[7] }}</td>
+          <td>{{ product[1] }}</td>
+          <td>{{ product[2] }}</td>
+          <td>Ksh {{ product[3] }}</td>
+          <td><img src="{{ url_for('static', filename=product[4]) }}" alt="{{ product[1] }}" width="100"></td>
+          <td>{{ product[5] }}</td>
         </tr>
         {% endfor %}
+      </tbody>
     </table>
-    <p>Total Price: Ksh {{ total_price }}</p>
-    <h1>Thank You For Shopping with Fresh Basket</h1>
-    <form action="{{ url_for('home') }}" >
-        <button type="submit">Return to HomePage</button>
-    </form>
+    <p>Total Amount: Ksh {{ total_price }}</p>
+  </div>
+  <div class="ship-container">
+    {% for ship in shipping_info %}
+    <h2>Shipping Information</h2>
+    <p>Full Name: {{ ship[2] }}</p>
+    <p>Street Address: {{ ship[3] }}</p>
+    <p>City: {{ ship[4] }}</p>
+    <p>State/Province: {{ ship[5] }}</p>
+    <p>Postal Code: {{ ship[6] }}</p>
+    <p>Country: {{ ship[7] }}</p>
+    {% endfor %}
+  </div>
+  <form action="{{ url_for('home') }}" >
+      <button type="submit">Return to HomePage</button>
+  </form>
+  <footer>
+    <div class="container">
+      <div class="footer-logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Fresh Basket Logo">
+      </div>
+      <div class="footer-columns">
+        <div class="footer-column">
+          <h3>Fresh Basket</h3>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Categories</h3>
+          <ul>
+            <li><a href="#">Fresh Produce</a></li>
+            <li><a href="#">Meat & Poultry</a></li>
+            <li><a href="#">Beverages</a></li>
+            <li><a href="#">Bakery & Bread </a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Follow Us</h3>
+          <ul class="social-media-icons">
+            <li><a href="https://web.facebook.com/profile.php?id=100089080427306"><img src="{{ url_for('static', filename='images/facebook1.svg') }}" alt="facebook"></a></li>
+            <li><a href="https://twitter.com/Theotsori"><img src="{{ url_for('static', filename='images/twitter1.svg') }}" alt="twitter"></a></li>
+            <li><a href="https://github.com/theotsori"><img src="{{ url_for('static', filename='images/github1.svg') }}" alt="github"></a></li>
+            <li><a href="https://wa.me/message/XPS4G47REHWYD1"><img src="{{ url_for('static', filename='images/whatsapp1.svg') }}" alt="whatsapp"></a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>The Team</h3>
+          <ul class="social-media-icons">
+            <li><a href="https://web.facebook.com/profile.php?id=100089080427306"><img src="{{ url_for('static', filename='images/facebook.svg') }}" alt="facebook"></a></li>
+            <li><a href="https://twitter.com/Theotsori"><img src="{{ url_for('static', filename='images/twitter.svg') }}" alt="twitter"></a></li>
+            <li><a href="https://github.com/theotsori"><img src="{{ url_for('static', filename='images/github.svg') }}" alt="github"></a></li>
+            <li><a href="https://wa.me/message/XPS4G47REHWYD1"><img src="{{ url_for('static', filename='images/whatsapp.svg') }}" alt="whatsapp"></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2023 Fresh Basket. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

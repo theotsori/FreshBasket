@@ -434,7 +434,10 @@ def checkout():
     cnx.close()
 
     # Render the template and pass the cart data to it
-    return render_template('checkout.html', cart_products=cart_products, total_price=total_price, shipping_info=shipping_info)
+    return render_template('checkout.html',
+                           cart_products=cart_products,
+                           total_price=total_price,
+                           shipping_info=shipping_info)
 
 
 @app.route('/place_order', methods=['POST'])

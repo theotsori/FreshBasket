@@ -72,6 +72,19 @@ body {
     background-color: goldenrod;
     margin: 5px;
   }
+
+  .cart-preview {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .cart:hover .cart-preview {
+    display: block;
+  }
+  
   
   /* Responsive layout - makes the three columns stack on top of each other instead of next to each other on smaller screens (600px wide or less) */
   @media screen and (max-width: 600px) {
