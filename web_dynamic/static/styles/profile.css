@@ -38,3 +38,18 @@ body {
     justify-content: center;
     display: flex;
   }
+
+  .profile-container form button {
+    background-color: #ff6f00;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .profile-container form button:hover {
+  background-color: #333;
+}
