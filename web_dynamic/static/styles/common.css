@@ -35,9 +35,9 @@ body {
   .features-containers {
     display: inline-block;
     width: 30%;
-    height: 400px;
+    height: 380px;
     border: 1px solid #bbb;
-    border-radius: 2%;
+    border-radius: 5%;
     margin-top: 10px;
     margin-left: 10px;
     margin-right: 10px;

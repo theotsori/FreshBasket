@@ -23,8 +23,13 @@ db_config = {
 }
 
 
-# Route for home page
+# Route for landing page
 @app.route('/')
+def landing():
+    return  render_template('landing.html')
+
+
+# Route for home page
 @app.route('/home')
 def home():
     # Check if the user is authenticated

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/landing.css') }}">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Fresh Basket: Landing Page</title>
+</head>
+<body>
+    <!-- Intro Section -->
+    <header class="landing-header">
+        <div class="container2">
+            <img src="{{ url_for('static', filename='images/signup.jpg') }}" alt="Cover Image">
+            <h1 class="landing-title">FreshBasket</h1>
+            <p class="landing-description">Fresh Basket is an online grocery shopping platform that allows users to shop for groceries from home and have them delivered to their doorstep. The project aims to solve the problem of long wait times and queues in grocery stores and to make grocery shopping more convenient and accessible for everyone.</p>
+            <a href="{{ url_for('home') }}" class="button">Visit Our Page</a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Feature Section -->
+    <section id="features">
+        <div class="container">
+            <h2>Key Features</h2>
+            <div class="feature">
+                <div class="feature-image">
+                    <img src="{{ url_for('static', filename='images/features1.jpg') }}" alt="Feature 1">
+                </div>
+                <div class="feature-content">
+                    <h3>Convenient Shopping</h3>
+                    <p>Shop for a wide variety of groceries anytime, anywhere, from fresh produce to pantry essentials, and have them conveniently delivered to your doorstep.</p>
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-content">
+                    <h3>Wide Selection</h3>
+                    <p>Choose from a vast selection of fresh produce, pantry essentials, dairy products, beverages, snacks, and more, and shop for groceries anytime, anywhere.</p>
+                </div>
+                <div class="feature-image">
+                    <img src="{{ url_for('static', filename='images/2features.jpg') }}" alt="Feature 2">
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-image">
+                    <img src="{{ url_for('static', filename='images/features3.jpg') }}" alt="Feature 3">
+                </div>
+                <div class="feature-content">
+                    <h3>Easy Checkout</h3>
+                    <p>Enjoy a hassle-free shopping experience with a streamlined checkout process and multiple secure payment options. Choose from convenient payment methods for seamless grocery purchases.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container1">
+            <h2>About</h2>
+            <p>FreshBasket was inspired by my personal passion for providing easy access to quality groceries. As a Portfolio Project for the ALX Software Engineering Program, this project allowed me to showcase my skills in web development and creating seamless user experiences.</p>
+            <h3>Project Engineer</h3>
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='images/2019me.jpg') }}" alt="Theodore Tsori">
+                <div class="member-description">
+                    <h3>Theodore Tsori</h3>
+                    <p>👨‍💻 Software engineer passionate about user-friendly applications, experienced in multiple languages 🌐 and always keeping up with emerging tech 🚀</p>
+                    <ul class="social-links">
+                        <li><a href="https://linkedin.com/in/theodore-tsori">LinkedIn</a></li>
+                        <li><a href="https://github.com/theotsori">GitHub</a></li>
+                        <li><a href="https://twitter.com/Theotsori">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://github.com/theotsori/FreshBasket" class="button">GitHub Repository</a>
+        </div>
+    </section>
+</body>
+</html>
