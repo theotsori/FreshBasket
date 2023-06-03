@@ -26,7 +26,7 @@ footer {
 }
 
 .footer-column {
-  flex: 0 0 calc(25% - 20px);
+  flex: 0 0 calc(50% - 20px);
   margin-bottom: 20px;
 }
 
@@ -72,4 +72,15 @@ footer {
   text-align: center;
   margin-top: 20px;
   color: #777;
+}
+
+/* Media queries for small screens */
+@media (max-width: 600px) {
+  .footer-columns {
+    flex-wrap: wrap;
+  }
+
+  .footer-column {
+    flex: 0 0 100%;
+  }
 }

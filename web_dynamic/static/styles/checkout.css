@@ -45,6 +45,14 @@ h1 {
   background-position: center;
 }
 
+@media screen and (max-width: 768px) {
+  .payment-img {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+  }
+}
+
 .ship-container {
   margin-bottom: 40px;
 }
@@ -116,4 +124,33 @@ button {
 
 button:hover {
   background-color: #e03d1e;
+}
+
+/* CSS code for small screens */
+@media screen and (max-width: 768px) {
+  .body-container {
+    padding: 10px;
+  }
+
+  .payment-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .payment-img {
+    width: 100%;
+    height: 300px;
+    margin-top: 20px;
+  }
+
+  .buttons-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  button {
+    margin-top: 10px;
+    width: 100%;
+  }
 }

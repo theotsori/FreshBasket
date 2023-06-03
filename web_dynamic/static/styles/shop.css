@@ -19,6 +19,7 @@ body {
 
 .category-container {
   margin-bottom: 20px;
+  overflow-x: auto;
 }
 
 .category-container h3 {
@@ -32,7 +33,8 @@ body {
   padding: 0;
   margin: 0;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  overflow-x: auto;
 }
 
 #category-list li {
@@ -109,4 +111,36 @@ button {
 
 button:hover {
   background-color: #45a049;
+}
+
+/* Media queries for small screens */
+@media (max-width: 600px) {
+  .shop-container {
+    padding: 10px;
+  }
+
+  .shop-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  #category-list {
+    justify-content: flex-start;
+    overflow-x: auto;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+
+  #product-list li {
+    width: calc(80% - 10px);
+  }
+
+  #product-list img {
+    width: 100%;
+    height: auto;
+  }
+
+  button {
+    width: 100%;
+  }
 }
