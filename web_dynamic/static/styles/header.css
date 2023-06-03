@@ -2,7 +2,7 @@
 .header {
   background-color: #f9f9f9;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
-  color: #fff;
+  color: #333;
   padding: 10px 0;
   position: sticky;
   top: 0;
@@ -124,26 +124,70 @@ nav button[type="submit"]:hover {
   border-radius: 50%;
 }
 
-/* Media Query for Mobile */
-@media (max-width: 768px) {
+/* CSS code for small screens */
+@media screen and (max-width: 768px) {
+  .logo {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
   .menu-toggle {
-      display: block;
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
   }
-  
-  nav ul {
-      display: none;
-      flex-direction: column;
+
+  .show-menu {
+    display: none;
   }
-  
-  nav ul li {
-      margin: 10px 0;
-  }
-  
+
   .show-menu ul {
-      display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
-  
-  .show-menu ul li {
-      margin-right: 0;
+
+  .show-menu li {
+    margin-bottom: 10px;
+  }
+
+  /* Additional styles for list items in the menu */
+  .show-menu li a {
+    display: block;
+    padding: 10px;
+    background-color: lightgray;
+    color: black;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+
+  .show-menu li a:hover {
+    background-color: gray;
+    color: white;
+  }
+
+  /* Styles to display menu when logo is clicked */
+  .logo a {
+    cursor: pointer;
+  }
+
+  .show-menu {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .menu-toggle i {
+    cursor: pointer;
+  }
+
+  .show-menu ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }

@@ -13,18 +13,18 @@ searchForm.addEventListener('submit', function (event) {
 });
 
 
-// select the menu toggle button
-function initializeMenuToggle() {
-  var menuToggle = document.querySelector('.menu-toggle');
-  if (menuToggle) {
-    menuToggle.addEventListener('click', function() {
-      var nav = document.querySelector('nav');
-      if (nav) {
-        nav.classList.toggle('show-menu');
-      }
-    });
-  }
+// Get the menu toggle button and menu
+const menuToggle = document.querySelector('.menu-toggle');
+const menu = document.querySelector('.show-menu');
+
+// Function to toggle the menu display
+function toggleMenu() {
+  menu.classList.toggle('show');
 }
+
+// Event listeners for logo and menu toggle button
+document.querySelector('.logo a').addEventListener('click', toggleMenu);
+menuToggle.addEventListener('click', toggleMenu);
 
 // Call the function after the element is added to the DOM
 window.addEventListener('DOMContentLoaded', initializeMenuToggle);
