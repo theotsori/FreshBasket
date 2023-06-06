@@ -61,9 +61,12 @@ class FlaskAppTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 302)
     
     def test_add_to_cart(self):
-        response = self.app.post('/add_to_cart', data={'product_id': '123'})
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json['status'], 'success')
+        with self.app as client:
+            with client.session_transaction() as sess:
+                sess['email'] = 'test@example.com'
+            response = client.post('/add_to_cart', data={'product_id': '123'}, follow_redirects=True)
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.json, {'status': 'success'})
     
     def test_remove_from_cart(self):
         response = self.app.post('/remove_from_cart', data={'product_id': '123'})
