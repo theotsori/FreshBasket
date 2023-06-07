@@ -34,9 +34,12 @@ def landing():
 def home():
     # Check if the user is authenticated
     if 'email' in session:
-        # checks items on the cart
-        cart_count = get_cart_count()
-        return render_template('index.html', cart_count=cart_count)
+        if session['email'] == 'admin@frb.com':
+            return redirect(url_for('admin_panel'))
+        else:
+            # For regular users, continue with the existing functionality
+            cart_count = get_cart_count()
+            return render_template('index.html', cart_count=cart_count)
     else:
         return redirect(url_for('signin'))
 
@@ -688,6 +691,16 @@ def videos():
     
     # Render the template and pass the videos to it
     return render_template('videos.html', videos=videos, cart_count=cart_count)
+
+
+# Route for the admin panel
+@app.route('/admin', methods=['GET'])
+def admin_panel():
+    # Check if the user is authenticated as an admin
+    if 'email' in session and session['email'] == 'admin@frb.com':
+        return render_template('admin_panel.html')
+    else:
+        return redirect(url_for('signin'))
 
 
 if __name__ == '__main__':
