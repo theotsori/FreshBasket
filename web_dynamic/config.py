@@ -12,7 +12,7 @@ DB_PASSWORD = os.environ.get('DB_PASSWORD')
 DB_DATABASE = os.environ.get('DB_DATABASE')
 
 # MySQL connection config
-DB_CONFIG = {
+db_config = {
     'host': DB_HOST,
     'user': DB_USER,
     'password': DB_PASSWORD,
