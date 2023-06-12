@@ -115,10 +115,10 @@ This will launch the application, and you can access it by opening your web brow
 The FreshBasket application provides several features to facilitate online grocery shopping. Here are some key functionalities:
 
 - **User Registration and Login:** Users can create a new account or log in to their existing account.
- ![Sign Up](https://miro.medium.com/v2/resize:fit:1100/format:webp/1*3cBczc8UqrtzOJdVO-Af-Q.png)
+![Sign Up](https://miro.medium.com/v2/resize:fit:1100/format:webp/1*3cBczc8UqrtzOJdVO-Af-Q.png)
 - **Product Catalog:** Users can browse and search for various grocery products.
 - **Adding to Cart:** Users can add products to their shopping cart.
- ![Products Page](https://miro.medium.com/v2/resize:fit:720/format:webp/1*r62XjPTqO72LxYJILrtW8A.png)
+![Products Page](https://miro.medium.com/v2/resize:fit:720/format:webp/1*r62XjPTqO72LxYJILrtW8A.png)
 - **Checkout Process:** Users can proceed to the checkout process and place their orders.
 - **Order History:** Users can view their past order details.
 - **Admin Dashboard:** Administrators have access to an admin dashboard for managing products, orders, and users.
