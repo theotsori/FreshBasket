@@ -28,7 +28,7 @@ In this post, we will explore how to build an online grocery delivery web applic
 - **Project Name:** FreshBasket
 - **Purpose:** Develop a fully functional online grocery delivery platform
 - **Project Engineer:** Theodore Tsori (Full Stack Developer)
-- **Timeline:** May 2023 — June 2022
+- **Timeline:** May 2023 — June 2023
 - **Target Audience:** Customers who prefer to order groceries online for convenient home delivery
 
 ---
